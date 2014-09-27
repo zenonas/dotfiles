@@ -1,3 +1,12 @@
 *.DS_Store
 *.swp
 *.swo
+*~
+.DS_Store
+.VimballRecord
+.netrwhist
+tags
+tmp
+vim/bundle/*
+!vim/bundle/Vundle.vim
+!vim/bundle/Vundle.vim/*
