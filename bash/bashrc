@@ -14,6 +14,9 @@ function source_if_present(){
   [[ -f $file ]] && source "$file"
 }
 
+# Source Perlbrew
+source_if_present ~/perl5/perlbrew/etc/bashrc
+
 # Source scripts and helper functions
 source_if_present $(brew --prefix)/etc/bash_completion
 source_if_present $HOME/.rvm/scripts/rvm
