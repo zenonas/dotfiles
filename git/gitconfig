@@ -1,0 +1,38 @@
+[user]
+	name = Zen Kyprianou
+	email = zen@kyprianou.eu
+
+[color]
+	ui = auto
+
+[core]
+	editor = vim
+
+[merge]
+  tool = vimdiff
+
+[alias]
+  st = status -sb
+  a = add
+  aa = add -A
+  ci = commit --verbose
+  b = blame -CCC
+  d = diff
+  dw = diff --word-diff
+  cl = clean -fd
+  co = checkout
+  cob = checkout -b
+  ls = shortlog -sn
+  br = branch
+  dl = "!git ll -1"
+  dlc = diff --cached HEAD^
+  f = "!git ls-files | grep -i"
+  noff = merge --no-ff
+  cp = cherry-pick
+  la = "!git config -l | grep alias | cut -c 7-"
+
+[push]
+	default = current
+
+[branch]
+	autosetuprebase = always
