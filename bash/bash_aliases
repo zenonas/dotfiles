@@ -1,0 +1,34 @@
+### Command Aliases ###
+alias psg='ps -ef|grep '
+alias sshp='ssh -o"PreferredAuthentications=password"'
+alias ack='ack-grep'
+
+# ls aliases #
+alias l='ls -CF'
+alias la='ls -A'
+alias ll='ls -alF'
+alias lh='ls -alFh'
+
+# brew #
+alias bup='brew update && brew upgrade'
+alias bis='brew install'
+#
+# Ruby aliases #
+alias cucumber='bundle exec cucumber --color'
+alias guard='bundle exec guard'
+alias rake='bundle exec rake'
+alias rspec='bundle exec rspec --color'
+alias prp='git pull && rake && git push'
+
+# Git aliases #
+alias g='git'
+# TODO: Find a way to prevent the expantion bug and move this to gitconfig
+alias gll='git_pretty_log_details'
+alias gl='git_pretty_log'
+for al in `__git_aliases`; do
+  alias g$al="git $al"
+done
+
+# Proxy aliases
+alias pp='source /etc/profile.d/proxy'
+alias np='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
