@@ -12,13 +12,22 @@ alias lh='ls -alFh'
 # brew #
 alias bup='brew update && brew upgrade'
 alias bis='brew install'
-#
+
 # Ruby aliases #
 alias cucumber='bundle exec cucumber --color'
 alias guard='bundle exec guard'
 alias rake='bundle exec rake'
 alias rspec='bundle exec rspec --color'
 alias prp='git pull && rake && git push'
+
+# Python aliases #
+alias pis='pyenv install'
+alias pvc='pyenv virtualenv'
+alias pva='pyenv activate'
+
+# Perlbrew aliases #
+alias pbi='perlbrew install'
+alias pbs='perlbrew switch'
 
 # Git aliases #
 alias g='git'
