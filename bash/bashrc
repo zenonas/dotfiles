@@ -28,3 +28,5 @@ source_if_present /usr/local/etc/bash_completion.d/git-completion.bash
 # Source Configs
 source_if_present $DIR/bash_config
 source_if_present $DIR/bash_aliases
+
+alias_completion
