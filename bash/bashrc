@@ -15,6 +15,9 @@ function source_if_present(){
 # Source Perlbrew
 source_if_present ~/perl5/perlbrew/etc/bashrc
 
+# Source Rbenv
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
 # Source Pyenv and Pyenv-virtualenv
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
