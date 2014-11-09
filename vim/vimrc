@@ -73,7 +73,7 @@ let mapleader = ","
 nmap <space> <leader>
 nmap <space><space> <leader><leader>
 
-colorscheme adCode
+colorscheme grb256
 
 set autoindent
 set autowrite       " Writes on make/shell commands
@@ -259,16 +259,16 @@ au BufRead,BufNewFile *.palette set filetype=ruby
 " ----------------------------------------------
 
 " Setup the projector toggle plugin
-let g:default_colorscheme = 'adCode'
+let g:default_colorscheme = 'grb256'
 let g:projector_colorscheme = 'mac-classic'
 
 " Setup Font
 if has('win32')
   set guifont=Consolas\ 9
 elseif has('mac')
-  set guifont=Menlo:h11
+  set guifont=Source\ Code\ Pro:h10
 else
-  set guifont=DejaVu\ Sans\ Mono\ 9
+  set guifont=DejaVu\ Sans\ Mono:h9
   " if you don't have these fonts, set one in your ~/vim.local file like this:
   " set guifont=fontname\ 10
 endif
@@ -431,6 +431,9 @@ function! StripTrailingWhitespace()
 endfunction
 
 let g:syntastic_enable_signs=1
+let g:syntastic_ruby_checkers = ['mri']
+let g:syntastic_ruby_exec = '/usr/bin/ruby'
+let g:syntastic_ruby_mri_exec = '/usr/bin/ruby'
 let g:syntastic_auto_loc_list=1
 
 " Add function for showing the syntax tag for the selected text
@@ -501,6 +504,8 @@ let g:gitgutter_sign_modified_removed = '~'
 " Vroom settings
 let g:vroom_write_all = 1
 let g:vroom_cucumber_path = 'cucumber '
+let g:vroom_use_binstubs = 1
+let g:vroom_binstubs_path = 'bin'
 let g:vroom_map_keys = 0
 
 " xmp-filter mappings
