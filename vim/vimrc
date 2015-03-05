@@ -74,7 +74,7 @@ let mapleader = ","
 nmap <space> <leader>
 nmap <space><space> <leader><leader>
 
-colorscheme grb256
+colorscheme monokai
 
 set autoindent
 set autowrite       " Writes on make/shell commands
