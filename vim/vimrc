@@ -15,6 +15,7 @@ Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'AutoTag'
 Plugin 'ack.vim'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'rizzatti/dash.vim'
 Plugin 'bling/vim-airline'
 Plugin 'kana/vim-fakeclip'
 Plugin 'bogado/file-line'
@@ -132,6 +133,9 @@ map <silent> <Leader><Leader> :b#<CR>
 
 " <leader>] to toggle the tags sidebar
 nmap <Leader>] :TagbarToggle<CR>
+
+" <leader> d to search in dash
+nmap <silent> <leader>d <Plug>DashSearch
 
 " <leader>a<?> to align visually selected lines on <something>
 vnoremap <silent> <Leader>a= :Tabularize /=<CR>
