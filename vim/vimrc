@@ -270,7 +270,7 @@ let g:projector_colorscheme = 'mac-classic'
 if has('win32')
   set guifont=Consolas\ 9
 elseif has('mac')
-  set guifont=Source\ Code\ Pro:h10
+  set guifont=Source\ Code\ Pro:h13
 else
   set guifont=DejaVu\ Sans\ Mono:h9
   " if you don't have these fonts, set one in your ~/vim.local file like this:
