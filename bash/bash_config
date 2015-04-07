@@ -21,7 +21,7 @@ bind '"\e[6~": next-history'
 
 ### Configure extra things
 # Bash in vi mode
-set -o vi
+#set -o vi # Lets try emacs mode for a bit
 
 # Term
 export TERM=xterm-256color
