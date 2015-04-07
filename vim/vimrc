@@ -243,6 +243,7 @@ map <C-k> <C-w>k
 au BufRead,BufNewFile *.scss set filetype=css
 au BufRead,BufNewFile *.jade.html set filetype=jade
 au BufRead,BufNewFile *.palette set filetype=ruby
+au BufRead,BufNewFile *.json set filetype=javascript
 
 " ----------------------------------------------
 " Setup Look & Feel
