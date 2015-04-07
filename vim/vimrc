@@ -43,6 +43,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-speeddating'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-fugitive'
 Plugin 'vim-coffee-script'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'vroom'
@@ -67,7 +68,7 @@ let mapleader = ","
 nmap <space> <leader>
 nmap <space><space> <leader><leader>
 
-colorscheme monokai
+colorscheme jellybeans
 
 set autoindent
 set autowrite       " Writes on make/shell commands
@@ -281,8 +282,13 @@ let g:airline_left_sep = ""
 let g:airline_left_alt_sep = ""
 let g:airline_right_sep = ""
 let g:airline_right_alt_sep = ""
+let g:airline#extensions#hunks#enabled = 0
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
 let g:airline#extensions#whitespace#enabled = 0
-let g:airline_theme = "powerlineish"
+let g:airline_theme = "jellybeans"
 
 autocmd FileType make set noexpandtab
 
