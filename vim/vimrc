@@ -10,10 +10,8 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 
-Plugin 'AdamWhittingham/projector_mode'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'AutoTag'
-Plugin 'ack.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'rizzatti/dash.vim'
 Plugin 'bling/vim-airline'
@@ -21,18 +19,13 @@ Plugin 'kana/vim-fakeclip'
 Plugin 'bogado/file-line'
 Plugin 'bufexplorer.zip'
 Plugin 'colorizer'
-Plugin 'digitaltoad/vim-jade'
 Plugin 'ecomba/vim-ruby-refactoring'
-Plugin 'elixir-lang/vim-elixir'
 Plugin 'ervandew/supertab'
 Plugin 'godlygeek/tabular'
 Plugin 'groenewege/vim-less'
-Plugin 'kana/vim-textobj-user'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
-Plugin 'matchit.zip'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'nelstrom/vim-textobj-rubyblock'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'regedarek/ZoomWin'
 Plugin 'rking/ag.vim'
@@ -173,7 +166,7 @@ nmap <silent> <Leader>m :NERDTreeToggle<CR>
 map <silent> <Leader>M :NERDTreeFind<CR>
 
 "  <Leader>p to switch to better font for projector
-noremap <silent> <leader>p :ToggleProjectorMode<CR>
+noremap <silent> <leader>p :colorscheme mac-classic<CR>
 
 "  <Leader>rt to run ctags on the current directory
 map <leader>rt :!ctags -R .<CR><CR>
@@ -262,10 +255,6 @@ au BufRead,BufNewFile *.palette set filetype=ruby
 " Setup Look & Feel
 " ----------------------------------------------
 
-" Setup the projector toggle plugin
-let g:default_colorscheme = 'grb256'
-let g:projector_colorscheme = 'mac-classic'
-
 " Setup Font
 if has('win32')
   set guifont=Consolas\ 9
@@ -296,9 +285,6 @@ let g:airline#extensions#whitespace#enabled = 0
 let g:airline_theme = "powerlineish"
 
 autocmd FileType make set noexpandtab
-
-" Extend % to do/end etc
-runtime! plugin/matchit.vim
 
 " Fix supertab/endwise incompatibility
 let g:SuperTabCrMapping = 0
