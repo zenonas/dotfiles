@@ -1,3 +1,5 @@
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 ### Command Aliases ###
 alias psg='ps -ef|grep '
 alias sshp='ssh -o"PreferredAuthentications=password"'
@@ -15,6 +17,7 @@ alias bis='brew install'
 
 # Ruby aliases #
 alias cucumber='bundle exec cucumber --color'
+alias knife='bundle exec knife'
 alias guard='bundle exec guard'
 alias rake='bundle exec rake'
 alias rspec='bundle exec rspec --color'
@@ -39,5 +42,5 @@ for al in `__git_aliases`; do
 done
 
 # Proxy aliases
-alias pp='source /etc/profile.d/proxy'
-alias np='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
+alias pp="source $DIR/scripts/proxy on"
+alias np="source $DIR/scripts/proxy off"
