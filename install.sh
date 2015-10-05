@@ -27,6 +27,7 @@ clean_up() {
   [[ -L ~/.bash_profile ]] && rm ~/.bash_profile
   [[ -L ~/.bashrc ]] && rm ~/.bashrc
   [[ -L ~/.gitconfig ]] && rm ~/.gitconfig
+  [[ -L ~/.gitignore ]] && rm ~/.gitignore
   [[ -L ~/.vim ]] && rm ~/.vim
   [[ -L ~/.vimrc ]] && rm ~/.vimrc
 }
@@ -36,6 +37,7 @@ link_dotfiles() {
   ln -s $DIR/bash/bash_profile ~/.bash_profile
   ln -s $DIR/bash/bashrc ~/.bashrc
   ln -s $DIR/git/gitconfig ~/.gitconfig
+  ln -s $DIR/git/gitignore ~/.gitignore
   ln -s $DIR/vim ~/.vim
   ln -s $DIR/vim/vimrc ~/.vimrc
 }
