@@ -31,7 +31,6 @@ Plugin 'regedarek/ZoomWin'
 Plugin 'rking/ag.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
 Plugin 'sjl/gundo.vim'
 Plugin 'slim-template/vim-slim.git'
 Plugin 't9md/vim-ruby-xmpfilter'
@@ -44,6 +43,7 @@ Plugin 'tpope/vim-speeddating'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-fugitive'
+Plugin 'digitaltoad/vim-jade'
 Plugin 'vim-coffee-script'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'vroom'
@@ -419,12 +419,6 @@ function! StripTrailingWhitespace()
 	normal `z
 endfunction
 
-let g:syntastic_enable_signs=1
-let g:syntastic_ruby_checkers = ['mri']
-let g:syntastic_ruby_exec = '/usr/bin/ruby'
-let g:syntastic_ruby_mri_exec = '/usr/bin/ruby'
-let g:syntastic_auto_loc_list=1
-
 " Add function for showing the syntax tag for the selected text
 function! <SID>SynStack()
   if !exists("*synstack")
@@ -509,8 +503,6 @@ autocmd FileType ruby imap <buffer> <Leader>x <Plug>(xmpfilter-run)
 " Disable Markdown folding
 let g:vim_markdown_folding_disabled=1
 
-" Don't report Angular ng-* attributes as errors in HTML
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 
 " Projectionist defaults
 let g:projectionist_heuristics ={
