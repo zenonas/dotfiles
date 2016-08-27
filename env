@@ -1,0 +1,8 @@
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/texbin:$HOME/.dotfiles/scripts
+
+# Source Rbenv
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+# Source Pyenv and Pyenv-virtualenv
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi

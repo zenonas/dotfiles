@@ -1,0 +1,61 @@
+# vim: set filetype=zsh
+
+is_remote(){
+  test -n "${SSH_CONNECTION}${SSH_CLIENT}"
+}
+
+is_root(){
+  test $UID -eq 0
+}
+
+is_staging(){
+  [[ -n "$STAGING_ENV" ]] || [[ "$RAILS_ENV" == 'staging' ]]
+}
+
+is_production(){
+  [[ -n "$PROD_ENV" ]]  || [[ "$RAILS_ENV" == 'production' ]]
+}
+
+prompt_host(){
+  # show host in green
+  local p_host='%F{green}%m%f'
+
+  # or in red if production, or yellow for Staging
+  is_staging    && p_host='%F{yellow}%B%m%b%f'
+  is_production && p_host='%F{red}%B%U%m%u%b%f'
+
+  echo "$p_host"
+}
+
+prompt_user(){
+  # Show username in blue
+  local p_user='%F{blue}%n%f'
+  # or in yellow if root
+  is_root && p_user='%F{yellow}%B%n%b%f'
+
+  echo "$p_user"
+}
+
+prompt_user_and_host(){
+  if is_remote || is_root ; then
+    echo "$( prompt_user )%F{242}@%f$( prompt_host ):"
+  else
+    echo ''
+  fi
+}
+
+rbenv_version_prompt() {
+  local set_from=$( rbenv version | grep -oE '/([^\)]*)' )
+  if [[ "$set_from" != "$HOME/.rbenv/version"  ]] ; then
+    echo " %{%F{198}%}‹$(rbenv version-name)›%{%f%}"
+  else
+    echo ""
+  fi
+}
+
+rprompt_setup(){
+  autoload -Uz add-zsh-hook
+	add-zsh-hook preexec rprompt_setup
+
+  RPROMPT='${rbenv_version_prompt}'
+}

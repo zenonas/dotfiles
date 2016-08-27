@@ -30,16 +30,23 @@ alias pva='pyenv activate'
 
 # Perlbrew aliases #
 alias pbi='perlbrew install'
-alias pbs='perlbrew switch'
+alias pbs='perlbrew#
+
+# rsync aliases #
+alias rsync-copy='rsync --verbose --progress --human-readable --compress --archive --hard-links --one-file-system'
+alias rsync-move='r-copy --remove-source-files'
+alias rsync-update='r-copy --update' switch'
 
 # Git aliases #
 alias g='git'
-# TODO: Find a way to prevent the expantion bug and move this to gitconfig
-alias gll='git_pretty_log_details'
-alias gl='git_pretty_log'
-for al in `__git_aliases`; do
-  alias g$al="git $al"
-done
+alias ga='g a'
+alias gaa='g aa'
+alias gc='g c'
+alias gc-m='g c -m'
+alias gco='g co'
+alias gd='g d'
+alias gl='g l'
+alias gst='g st'
 
 # Proxy aliases
 alias pp="source $DIR/scripts/proxy on"
