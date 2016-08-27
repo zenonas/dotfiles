@@ -9,28 +9,50 @@
 	editor = vim
   excludesfile  = ~/.gitignore
 
+[mergetool]
+	keepBackup = false
 [merge]
-  tool = vimdiff
+  keepBackup = false
+  tool = diffmerge
+  defaultToUpstream = true
+[mergetool "diffmerge"]
+	cmd = "diffmerge --nosplash --merge --result=\"$MERGED\" \"$LOCAL\" \"$(if test -f \"$BASE\"; then echo \"$BASE\"; else echo \"$LOCAL\"; fi)\" \"$REMOTE\""
+	trustExitCode = true
 
 [alias]
-  st = status -sb
   a = add
   aa = add -A
-  ci = commit --verbose
-  b = blame -CCC
-  d = diff
-  dw = diff --word-diff
+  b = branch
+  bl = blame -CCC
+  c = commit
+  ca = commit -a
+  caa = commit -a --amend -CHEAD
   cl = clean -fd
   co = checkout
-  cob = checkout -b
-  ls = shortlog -sn
-  br = branch
-  dl = "!git ll -1"
-  dlc = diff --cached HEAD^
-  f = "!git ls-files | grep -i"
-  noff = merge --no-ff
   cp = cherry-pick
-  la = "!git config -l | grep alias | cut -c 7-"
+  d = diff
+  dc = diff --cached
+  dcw = diff --word-diff --cached
+  dw = diff --cached
+  dwc = diff --word-diff --cached
+  ff = merge --ff-only
+  go = checkout -B
+  l = log --graph --pretty=format:'%C(green)%h%C(reset) %<(21)%C(yellow)%ar%C(reset) %<(20)%C(bold blue)%an%Creset %C(bold red)%d%C(reset) %s' --abbrev-commit
+  ls = shortlog -sn
+  m = merge
+  mf = merge --no-ff
+  mt = mergetool
+  n = checkout `git log HEAD..master --pretty=%h |tail -1`
+  punch = push -f
+  rb = rebase
+  s = status -bs
+  sb = show-branch
+  st = status -bs
+  standup = !"git log --reverse --branches --since='$(if [[ "Mon" == "$(date +%a)" ]]; then echo "last friday"; else echo "yesterday"; fi)' --author=$(git config --get user.email) --format=format:'%C(cyan) %ad %C(yellow)%h %Creset %s %Cred%d' --date=local"
+  tags = tag -l
+  unstage = reset head
+  vim = !vim .git/index
+  wc = whatchanged -p --abbrev-commit --pretty=medium
 
 [push]
 	default = current
