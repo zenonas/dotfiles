@@ -1,0 +1,52 @@
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+### Command Aliases ###
+alias psg='ps -ef|grep '
+alias sshp='ssh -o"PreferredAuthentications=password"'
+alias ack='ack-grep'
+
+# ls aliases #
+alias l='ls -CF'
+alias la='ls -A'
+alias ll='ls -alF'
+alias lh='ls -alFh'
+
+# brew #
+alias bup='brew update && brew upgrade'
+alias bis='brew install'
+
+# Ruby aliases #
+alias cucumber='bundle exec cucumber --color'
+alias knife='bundle exec knife'
+alias guard='bundle exec guard'
+alias rake='bundle exec rake'
+alias rspec='bundle exec rspec --color'
+alias prp='git pull && rake && git push'
+
+# Python aliases #
+alias pis='pyenv install'
+alias pvc='pyenv virtualenv'
+alias pva='pyenv activate'
+
+# Perlbrew aliases #
+alias pbi='perlbrew install'
+alias pbs='perlbrew#
+
+# rsync aliases #
+alias rsync-copy='rsync --verbose --progress --human-readable --compress --archive --hard-links --one-file-system'
+alias rsync-move='r-copy --remove-source-files'
+alias rsync-update='r-copy --update' switch'
+
+# Git aliases #
+alias g='git'
+alias ga='g a'
+alias gaa='g aa'
+alias gc='g c'
+alias gc-m='g c -m'
+alias gd='g d'
+alias gl='g l'
+alias gst='g st'
+
+# Proxy aliases
+alias pp="source $DIR/scripts/proxy on"
+alias np="source $DIR/scripts/proxy off"
