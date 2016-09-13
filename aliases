@@ -27,6 +27,7 @@ alias prp='git pull && rake && git push'
 alias pis='pyenv install'
 alias pvc='pyenv virtualenv'
 alias pva='pyenv activate'
+alias v='mvim'
 
 # Perlbrew aliases #
 alias pbi='perlbrew install'
