@@ -29,6 +29,7 @@ prompt pure
 # Set colours up
 export CLICOLOR=1
 export LSCOLORS=Gxfxcxdxbxegedabagacad
+export EDITOR=vim
 
 setopt NO_BEEP
 
