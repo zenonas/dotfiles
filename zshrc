@@ -176,4 +176,4 @@ compinit -i
 compdef g='git'
 
 bindkey "b" backward-word
-bindkey "f" forward-wordompinit
+bindkey "f" forward-word
