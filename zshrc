@@ -15,6 +15,9 @@ PLUGINS="$ZSHDIR/plugins"
 source_if_present "$DOTFILES/env"
 source_if_present "$DOTFILES/aliases"
 
+#Set vim mode
+bindkey -v
+
 # Load direnv if it is available
 if type direnv > /dev/null; then eval "$(direnv hook zsh)"; fi
 
@@ -59,6 +62,13 @@ setopt SHARE_HISTORY # share history between sessions
 setopt INC_APPEND_HISTORY # adds history incrementally
 setopt HIST_IGNORE_ALL_DUPS  # don't record dupes in history
 setopt HIST_REDUCE_BLANKS
+
+bindkey '^P' up-history
+bindkey '^N' down-history
+bindkey '^?' backward-delete-char
+bindkey '^h' backward-delete-char
+bindkey '^w' backward-kill-word
+bindkey '^r' history-incremental-search-backward
 
 # Add history substring searching
 source "$PLUGINS/zsh-history-substring-search/zsh-history-substring-search.zsh"
