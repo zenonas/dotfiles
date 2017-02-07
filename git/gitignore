@@ -1,4 +1,4 @@
 deployments
 node_modules
 tags
-public
+*.sw*
