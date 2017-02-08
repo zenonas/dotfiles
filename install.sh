@@ -7,6 +7,7 @@ run() {
   if [[ ! -d $BACKUP_DOTFILES_DIR ]]; then
     backup_old_dotfiles
   fi
+  mkdir -p $DIR/tmp
   clean_up
   link_dotfiles
   install_vim_plugins
