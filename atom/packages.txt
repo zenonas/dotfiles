@@ -8,6 +8,8 @@ linter-haml@2.0.0
 linter-rubocop@0.5.3
 linter-ruby@1.2.5
 linter-scss-lint@3.1.0
+markdown-pdf@1.5.0
+markdown-preview-plus@2.4.6
 platformio-ide-terminal@2.3.1
 ruby-slim@0.2.0
 ruby-test@1.0.1
