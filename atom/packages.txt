@@ -1,4 +1,5 @@
 atom-fuzzy-grep@0.15.0
+color-picker@2.2.5
 goto-definition@1.1.19
 language-haml@0.24.1
 linter@1.11.23
@@ -12,5 +13,7 @@ markdown-preview-plus@2.4.6
 platformio-ide-terminal@2.3.1
 ruby-slim@0.2.0
 ruby-test@1.0.1
+toggle-quotes@1.0.0
+trailing-spaces@0.4.0
 vim-mode-plus@0.82.3
 
