@@ -22,5 +22,7 @@
     shell: "zsh"
     specFramework: "rspec"
   "tree-view": {}
+  "vim-mode-plus":
+    useClipboardAsDefaultRegister: true
   welcome:
     showOnStartup: false
