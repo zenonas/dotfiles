@@ -37,5 +37,6 @@
   ', .': 'fuzzy-finder:toggle-buffer-finder'
   ', shift-m': 'tree-view:reveal-active-file'
   ', f': 'fuzzy-finder:toggle-file-finder'
+  ', s w': 'whitespace:remove-trailing-whitespace'
 '.platform-darwin atom-workspace':
   'cmd-§': 'platformio-ide-terminal:toggle'
