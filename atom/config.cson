@@ -1,10 +1,14 @@
 "*":
   core:
     telemetryConsent: "no"
+    warnOnLargeFileLimit: 10
   editor:
-    fontSize: 13
+    fontSize: 12
+    preferredLineLength: 120
   "exception-reporting":
     userId: "c51c3493-88d3-be92-fcf4-e01558d7db3c"
+  linter:
+    showErrorPanel: false
   "platformio-ide-terminal":
     ansiColors:
       normal:

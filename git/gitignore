@@ -1,4 +1,5 @@
 deployments
+.DS_Store
 node_modules
 tags
 *.sw*
