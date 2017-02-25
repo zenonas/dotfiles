@@ -9,6 +9,8 @@
     userId: "c51c3493-88d3-be92-fcf4-e01558d7db3c"
   linter:
     showErrorPanel: false
+  "one-dark-ui":
+    layoutMode: "Compact"
   "platformio-ide-terminal":
     ansiColors:
       normal:
