@@ -1,0 +1,23 @@
+"*":
+  core:
+    telemetryConsent: "no"
+  editor:
+    fontSize: 13
+  "exception-reporting":
+    userId: "c51c3493-88d3-be92-fcf4-e01558d7db3c"
+  "platformio-ide-terminal":
+    ansiColors:
+      normal:
+        blue: "#067fcd"
+      zBright:
+        brightBlue: "#1077ff"
+    style:
+      defaultPanelHeight: "20%"
+      theme: "solarized-dark"
+  "ruby-test":
+    shell: "zsh"
+    specFramework: "rspec"
+  "tree-view":
+    hideVcsIgnoredFiles: true
+  welcome:
+    showOnStartup: false
