@@ -1,0 +1,8 @@
+atom-fuzzy-grep@0.15.0
+autocomplete-ruby@0.2.6
+goto-definition@1.1.19
+platformio-ide-terminal@2.3.1
+ruby-slim@0.2.0
+ruby-test@1.0.1
+vim-mode-plus@0.82.3
+
