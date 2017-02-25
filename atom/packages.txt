@@ -1,5 +1,4 @@
 atom-fuzzy-grep@0.15.0
-autocomplete-ruby@0.2.6
 goto-definition@1.1.19
 language-haml@0.24.1
 linter@1.11.23

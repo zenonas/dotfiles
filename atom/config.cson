@@ -23,7 +23,8 @@
   "ruby-test":
     shell: "zsh"
     specFramework: "rspec"
-  "tree-view": {}
+  "tree-view":
+    hideVcsIgnoredFiles: true
   "vim-mode-plus":
     useClipboardAsDefaultRegister: true
   welcome:
