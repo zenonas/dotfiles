@@ -11,6 +11,7 @@ run() {
   clean_up
   link_dotfiles
   install_vim_plugins
+  install_atom_and_plugins
 }
 
 backup_old_dotfiles() {
@@ -23,6 +24,7 @@ backup_old_dotfiles() {
   [[ -f ~/.vimrc ]] && mv ~/.vimrc $BACKUP_DOTFILES_DIR/
   [[ -d ~/.vim ]] && mv ~/.vim $BACKUP_DOTFILES_DIR/
   [[ -f ~/.bashrc ]] && mv ~/.bashrc $BACKUP_DOTFILES_DIR/
+  [[ -f ~/.atom ]] && mv ~/.atom $BACKUP_DOTFILES_DIR/
 }
 
 clean_up() {
@@ -46,11 +48,17 @@ link_dotfiles() {
   ln -s $DIR/git/gitignore ~/.gitignore
   ln -s $DIR/vim ~/.vim
   ln -s $DIR/vim/vimrc ~/.vimrc
+  ln -s $DIR/atom ~/.atom
 }
 
 install_vim_plugins() {
   vim +:PluginUpdate +:PluginClean +qall
   echo "Installed Vim plugins via vundle"
+}
+
+install_atom_and_plugins() {
+  [[ ! -f /usr/local/bin/atom ]] && brew cask install atom
+  apm install --packages-file $DIR/atom/packages.txt
 }
 
 run
