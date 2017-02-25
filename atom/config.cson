@@ -17,7 +17,6 @@
   "ruby-test":
     shell: "zsh"
     specFramework: "rspec"
-  "tree-view":
-    hideVcsIgnoredFiles: true
+  "tree-view": {}
   welcome:
     showOnStartup: false
