@@ -11,3 +11,5 @@ tmp
 vim/bundle/*
 !vim/bundle/Vundle.vim
 !vim/bundle/Vundle.vim/*
+atom/packages
+atom/storage
