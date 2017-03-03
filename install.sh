@@ -37,6 +37,7 @@ clean_up() {
   [[ -L ~/.gitignore ]] && rm ~/.gitignore
   [[ -L ~/.vim ]] && rm ~/.vim
   [[ -L ~/.vimrc ]] && rm ~/.vimrc
+  [[ -L ~/.atom ]] && rm ~/.atom
 }
 
 link_dotfiles() {
