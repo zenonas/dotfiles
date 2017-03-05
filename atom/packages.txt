@@ -5,15 +5,15 @@ language-haml@0.24.1
 linter@1.11.23
 linter-coffeelint@1.2.1
 linter-haml@2.0.0
-linter-rubocop@0.5.3
+linter-rubocop@1.0.0
 linter-ruby@1.2.5
 linter-scss-lint@3.1.0
 markdown-pdf@1.5.0
-markdown-preview-plus@2.4.8
+markdown-preview-plus@2.4.9
 platformio-ide-terminal@2.4.0
 ruby-slim@0.2.0
 ruby-test@1.0.1
-toggle-quotes@1.0.0
+toggle-quotes@1.0.1
 trailing-spaces@0.4.0
 vim-mode-plus@0.82.3
 
