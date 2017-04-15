@@ -7,8 +7,7 @@
     preferredLineLength: 120
   "exception-reporting":
     userId: "c51c3493-88d3-be92-fcf4-e01558d7db3c"
-  linter:
-    showErrorPanel: false
+  linter: {}
   "one-dark-ui":
     layoutMode: "Compact"
   "platformio-ide-terminal":
@@ -21,10 +20,12 @@
       defaultPanelHeight: "20%"
       theme: "solarized-dark"
   "ruby-test":
+    cucumberAllCommand: "docker-compose run {name} cucumber --color features"
+    rspecFileCommand: "docker-compose run {project_name} rspec --tty {relative_path}"
+    rspecSingleCommand: "docker-compose run {project_name} rspec --tty {relative_path}:{line_number}"
     shell: "zsh"
     specFramework: "rspec"
-  "tree-view":
-    hideVcsIgnoredFiles: true
+  "tree-view": {}
   "vim-mode-plus":
     useClipboardAsDefaultRegister: true
   welcome:
