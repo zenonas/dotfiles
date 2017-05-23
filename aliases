@@ -57,3 +57,8 @@ alias np="source $DIR/scripts/proxy off"
 alias formatjson='ruby -rjson -e "puts JSON.pretty_generate(JSON.parse(STDIN.gets))"'
 alias formatxml='ruby -e "require \"rexml/document\";d=REXML::Document.new(STDIN.gets);d.write(out=\"\", 4);puts out"'
 alias base64_to_pdf='ruby -rbase64 -rtempfile -e "tmpfile = Tempfile.new([\"base64_to_pdf\", \".pdf\"]); tmpfile.write(Base64.decode64(STDIN.gets)); tmpfile.flush; system(\"open #{tmpfile.path}\")"'
+
+alias dcra='docker-compose run $(basename "$PWD")'
+alias dcr='docker-compose run'
+alias dcu='docker-compose up'
+alias dcd='docker-compose down'
