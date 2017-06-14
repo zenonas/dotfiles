@@ -48,6 +48,8 @@ alias gco='g co'
 alias gd='g d'
 alias gl='g l'
 alias gst='g st'
+alias gp='g push'
+alias gpf='gp --force'
 
 # Proxy aliases
 alias pp="source $DIR/scripts/proxy on"

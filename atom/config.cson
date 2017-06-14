@@ -1,16 +1,18 @@
 "*":
   core:
+    packagesWithKeymapsDisabled: [
+      "dash"
+    ]
     telemetryConsent: "no"
     warnOnLargeFileLimit: 10
   editor:
-    fontSize: 13
+    fontSize: 12
     preferredLineLength: 120
   "exception-reporting":
     userId: "c51c3493-88d3-be92-fcf4-e01558d7db3c"
   linter: {}
   "linter-scss-lint": {}
-  "one-dark-ui":
-    layoutMode: "Compact"
+  "one-dark-ui": {}
   "platformio-ide-terminal":
     ansiColors:
       normal:
@@ -26,7 +28,8 @@
     rspecSingleCommand: "dcra rspec --tty {relative_path}:{line_number}"
     shell: "zsh"
     specFramework: "rspec"
-  "tree-view": {}
+  "tree-view":
+    hideVcsIgnoredFiles: true
   "vim-mode-plus":
     useClipboardAsDefaultRegister: true
   welcome:
