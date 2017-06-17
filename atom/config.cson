@@ -24,8 +24,8 @@
       theme: "solarized-dark"
   "ruby-test":
     cucumberAllCommand: "dcra cucumber --color features"
-    rspecFileCommand: "dcra rspec --tty {relative_path}"
-    rspecSingleCommand: "dcra rspec --tty {relative_path}:{line_number}"
+    rspecFileCommand: "dcea rspec --tty {relative_path}"
+    rspecSingleCommand: "dcea rspec --tty {relative_path}:{line_number}"
     shell: "zsh"
     specFramework: "rspec"
   "tree-view":
