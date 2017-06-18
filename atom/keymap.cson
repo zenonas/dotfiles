@@ -37,6 +37,7 @@
   ', .': 'fuzzy-finder:toggle-buffer-finder'
   ', shift-m': 'tree-view:reveal-active-file'
   ', f': 'fuzzy-finder:toggle-file-finder'
+  ', shift-f': 'fuzzy-grep:toggle'
   ', s w': 'whitespace:remove-trailing-whitespace'
   ', d': 'dash:shortcut'
 '.platform-darwin atom-workspace':
