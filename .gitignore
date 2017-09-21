@@ -13,3 +13,4 @@ vim/bundle/*
 !vim/bundle/Vundle.vim/*
 atom/packages
 atom/storage
+atom/github.cson
