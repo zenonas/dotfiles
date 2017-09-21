@@ -62,6 +62,7 @@ alias base64_to_pdf='ruby -rbase64 -rtempfile -e "tmpfile = Tempfile.new([\"base
 
 alias dcra='docker-compose run $(basename "$PWD")'
 alias dcea='docker-compose exec $(basename "$PWD")'
+alias dcl='docker-compose logs -f --tail="100"'
 alias dce='docker-compose exec'
 alias dcr='docker-compose run'
 alias dcu='docker-compose up'
