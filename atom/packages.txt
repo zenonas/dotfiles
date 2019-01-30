@@ -1,25 +1,27 @@
-atom-fuzzy-grep@0.16.0
-busy-signal@1.4.3
-color-picker@2.2.5
-dash@1.7.1
-ex-mode@0.15.0
-goto-definition@1.3.3
-intentions@1.1.2
-language-haml@0.24.5
-language-javascript-jsx@0.3.7
-linter@2.2.0
-linter-coffeelint@1.2.1
-linter-haml@2.0.1
-linter-rubocop@2.1.1
-linter-ruby@1.2.5
-linter-scss-lint@3.1.0
-linter-ui-default@1.6.1
-markdown-pdf@1.5.4
-markdown-preview-plus@2.4.9
-platformio-ide-terminal@2.5.1
-ruby-slim@0.2.0
-ruby-test@1.0.2
-toggle-quotes@1.0.1
-trailing-spaces@0.4.0
-vim-mode-plus@0.93.0
+[36mCommunity Packages (25)[39m /Users/zen/.atom/packages
+├── atom-fuzzy-grep@0.17.2
+├── busy-signal@2.0.0
+├── color-picker@2.3.0
+├── dash@1.7.1
+├── ex-mode@0.18.0
+├── goto-definition@1.3.4
+├── intentions@1.1.5
+├── language-haml@0.32.1
+├── language-javascript-jsx@0.3.7
+├── linter@2.3.0
+├── linter-coffeelint@2.0.1
+├── linter-haml@2.0.2
+├── linter-rubocop@2.2.3
+├── linter-ruby@1.3.0
+├── linter-scss-lint@3.2.1
+├── linter-ui-default@1.7.1
+├── markdown-pdf@2.2.0
+├── markdown-preview-plus@3.7.1
+├── multifile-rename@0.1.6
+├── platformio-ide-terminal@2.9.0
+├── ruby-slim@0.2.0
+├── ruby-test@1.0.2
+├── toggle-quotes@1.1.3
+├── trailing-spaces@0.4.0
+└── vim-mode-plus@1.36.0
 

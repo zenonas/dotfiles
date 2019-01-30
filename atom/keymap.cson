@@ -39,6 +39,10 @@
   ', f': 'fuzzy-finder:toggle-file-finder'
   ', shift-f': 'fuzzy-grep:toggle'
   ', s w': 'whitespace:remove-trailing-whitespace'
+  ', c  space': 'editor:toggle-line-comments'
   ', d': 'dash:shortcut'
+  ', `': 'platformio-ide-terminal:toggle'
 '.platform-darwin atom-workspace':
-  'cmd-§': 'platformio-ide-terminal:toggle'
+  'cmd-/': 'platformio-ide-terminal:toggle'
+'atom-workspace atom-text-editor:not([mini])':
+  'cmd-/': ''

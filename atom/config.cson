@@ -1,5 +1,8 @@
 "*":
   core:
+    disabledPackages: [
+      "markdown-preview"
+    ]
     packagesWithKeymapsDisabled: [
       "dash"
     ]
@@ -29,8 +32,7 @@
     rspecSingleCommand: "dcea rspec --tty {relative_path}:{line_number}"
     shell: "zsh"
     specFramework: "rspec"
-  "tree-view":
-    hideVcsIgnoredFiles: true
+  "tree-view": {}
   "vim-mode-plus":
     useClipboardAsDefaultRegister: true
   welcome:

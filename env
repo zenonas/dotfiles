@@ -1,4 +1,4 @@
-export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/texbin:$HOME/.dotfiles/scripts
+export PATH=/usr/local/opt/grep/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/texbin:$HOME/.dotfiles/scripts:$PATH
 
 # Source Rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
@@ -10,3 +10,7 @@ if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -
 # Source NVM
 export NVM_DIR="$HOME/.nvm"
 source "/usr/local/opt/nvm/nvm.sh"
+
+# GO Lang
+export GOPATH="$HOME/.go"
+export PATH=$PATH:$GOPATH/bin
