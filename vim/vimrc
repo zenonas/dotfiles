@@ -10,47 +10,34 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 
-Plugin 'AndrewRadev/splitjoin.vim'
-Plugin 'AutoTag'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'rizzatti/dash.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'kana/vim-fakeclip'
 Plugin 'bogado/file-line'
 Plugin 'bufexplorer.zip'
 Plugin 'colorizer'
-Plugin 'ecomba/vim-ruby-refactoring'
 Plugin 'ervandew/supertab'
 Plugin 'godlygeek/tabular'
 Plugin 'groenewege/vim-less'
 Plugin 'kien/ctrlp.vim'
-Plugin 'majutsushi/tagbar'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'regedarek/ZoomWin'
 Plugin 'rking/ag.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
-Plugin 'sjl/gundo.vim'
 Plugin 'slim-template/vim-slim.git'
 Plugin 't9md/vim-ruby-xmpfilter'
-Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-haml'
-Plugin 'tpope/vim-projectionist'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-speeddating'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-fugitive'
-Plugin 'digitaltoad/vim-jade'
-Plugin 'vim-coffee-script'
 Plugin 'vim-ruby/vim-ruby'
-Plugin 'vroom'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
 
 if filereadable(expand("~/.vim.plugins.local"))
   source ~/.vim.plugins.local
@@ -129,12 +116,6 @@ nmap <silent> <unique> <Leader>. :BufExplorer<CR>
 " Double leader to switch to the previous buffer
 map <silent> <Leader><Leader> :b#<CR>
 
-" <leader>] to toggle the tags sidebar
-nmap <Leader>] :TagbarToggle<CR>
-
-" <leader> d to search in dash
-nmap <silent> <leader>d <Plug>DashSearch
-
 " <leader>a<?> to align visually selected lines on <something>
 vnoremap <silent> <Leader>a= :Tabularize /=<CR>
 vnoremap <silent> <Leader>a=> :Tabularize /=>/l1c1r1<CR>
@@ -147,17 +128,6 @@ vnoremap <silent> <Leader>a<space> :Tabularize /[^ ] \+\zs/l0r1<CR>
 "  <Leader>f to clear cache and fuzzy search files; ,F in current file's directory
 map <silent> <leader>f :ClearCtrlPCache<cr>\|:CtrlP<cr>
 map <silent> <leader>F :ClearCtrlPCache<cr>\|:CtrlPCurFile<cr>
-
-"  <Leader>g to jump to the next change since git commit
-"  <Leader>G to jump to the last change since git commit
-nmap <leader>g <Plug>GitGutterNextHunk
-nmap <leader>G <Plug>GitGutterPrevHunk
-
-"  <Leader>gt to toggle the gutter
-nmap <leader>gt :GitGutterToggle<CR>
-
-"  <Leader>gh highlight changed lines
-nmap <leader>gh :GitGutterLineHighlightsToggle<CR>
 
 "  <Leader>h to dismiss search result highlighting until next search or press of 'n'
 :noremap <silent> <leader>h :noh<CR>
@@ -172,9 +142,6 @@ map <silent> <Leader>M :NERDTreeFind<CR>
 
 "  <Leader>p to switch to better font for projector
 noremap <silent> <leader>p :colorscheme mac-classic<CR>
-
-"  <Leader>rt to run ctags on the current directory
-map <leader>rt :!ctags -R .<CR><CR>
 
 "  <Leader>s and ,S to split and join lines
 nmap <silent> <leader>s :SplitjoinSplit<cr>
@@ -480,20 +447,6 @@ let g:ctrlp_custom_ignore = {
 
 "  Set the git gutter colors to be the same as the number column
 hi clear SignColumn
-
-" Set the Gutter to show all the time, avoiding the column 'pop' when saving
-set signcolumn=yes
-let g:gitgutter_sign_added = '+'
-let g:gitgutter_sign_modified = '~'
-let g:gitgutter_sign_removed = '-'
-let g:gitgutter_sign_modified_removed = '~'
-
-" Vroom settings
-let g:vroom_write_all = 1
-let g:vroom_cucumber_path = 'cucumber '
-let g:vroom_use_binstubs = 1
-let g:vroom_binstubs_path = 'bin'
-let g:vroom_map_keys = 0
 
 " xmp-filter mappings
 autocmd FileType ruby nmap <buffer> <Leader>X <Plug>(xmpfilter-mark)
