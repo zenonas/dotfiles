@@ -33,6 +33,7 @@ clean_up() {
   echo "Cleaning up old symlinks"
   [[ -L ~/.bash_profile ]] && rm ~/.bash_profile
   [[ -L ~/.bashrc ]] && rm ~/.bashrc
+  [[ -L ~/.dotfiles ]] && rm ~/.dotfiles
   [[ -L ~/.zshrc ]] && rm ~/.zshrc
   [[ -L ~/.gitconfig ]] && rm ~/.gitconfig
   [[ -L ~/.gitignore ]] && rm ~/.gitignore
@@ -67,16 +68,16 @@ install_brew() {
 }
 
 install_apps() {
-  brew install coreutils watch wget top vim zsh ag rbenv jenv pyenv nodenv jq
-  brew cask install cyberduck iterm visual-studio-code intellij-idea docker virtualbox virtualbox-extension-pack google-chrome firefox fontbase
+  brew install coreutils watch wget htop vim zsh ag rbenv jenv pyenv nodenv jq
+  brew cask install cyberduck iterm2 visual-studio-code intellij-idea docker virtualbox virtualbox-extension-pack google-chrome firefox fontbase
 }
 
 configure_stuff() {
   read -p 'Enter full name: ' fullname
   read -p 'Enter email address: ' email
 
-  sed -i '' 's/Zen Kyprianou/${fullname}/g' $DIR/git/gitconfig
-  sed -i '' 's/zen@kyprianou.eu/${email}/g' $DIR/git/gitconfig
+  sed -i '' "s/Zen Kyprianou/$fullname/g" $DIR/git/gitconfig
+  sed -i '' "s/zen@kyprianou.eu/$email/g" $DIR/git/gitconfig
 }
 
 run
