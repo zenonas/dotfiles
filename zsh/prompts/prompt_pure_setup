@@ -154,7 +154,7 @@ prompt_pure_preprompt_render() {
 	# username and machine if applicable
 	preprompt+="$(prompt_user_and_host)"
 	# show the current path
-	preprompt+="%F{blue}%~%f"
+	preprompt+="%F{yellow}%~%f"
   # show the Ruby version if not the rbenv global one
   preprompt+="%F{198}${prompt_pure_ruby_version}%f"
 	# git info
