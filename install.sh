@@ -69,7 +69,7 @@ install_brew() {
 
 install_apps() {
   brew install coreutils watch wget htop vim zsh ag rbenv jenv pyenv nodenv jq
-  brew cask install cyberduck iterm2 visual-studio-code intellij-idea docker virtualbox virtualbox-extension-pack google-chrome firefox fontbase
+  brew cask install cyberduck iterm2 visual-studio-code intellij-idea docker postman virtualbox virtualbox-extension-pack google-chrome firefox fontbase
 }
 
 configure_stuff() {
