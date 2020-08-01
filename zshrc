@@ -18,6 +18,10 @@ source_if_present "$DOTFILES/aliases"
 #Set vim mode
 bindkey -v
 
+#ensure XDG_CONFIG_HOME is setup
+[[ ! -d $XDG_CONFIG_HOME ]] && mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
+export XDG_CONFIG_HOME=$HOME/.config
+
 # Load direnv if it is available
 if type direnv > /dev/null; then eval "$(direnv hook zsh)"; fi
 
@@ -187,3 +191,5 @@ compdef g='git'
 
 bindkey "b" backward-word
 bindkey "f" forward-word
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

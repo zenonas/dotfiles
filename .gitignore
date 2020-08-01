@@ -8,9 +8,5 @@
 tags
 tmp
 .gitkeep
-vim/bundle/*
-!vim/bundle/Vundle.vim
-!vim/bundle/Vundle.vim/*
-atom/packages
-atom/storage
-atom/github.cson
+nvim/plugins/*
+nvim/undo_data/*
