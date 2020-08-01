@@ -55,6 +55,7 @@ link_dotfiles() {
   ln -s $DIR/git/gitignore ~/.gitignore
   ln -s $DIR/nvim ~/.vim
   ln -s $DIR/nvim/vimrc ~/.vimrc
+  ln -s $DIR/tmux/tmux.conf ~/.tmux.conf
   ln -s $DIR/nvim $XDG_CONFIG_HOME/nvim
   ln -s $DIR/alacritty $XDG_CONFIG_HOME/alacritty
 }
