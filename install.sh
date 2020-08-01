@@ -11,6 +11,7 @@ run() {
   mkdir -p $DIR/tmp
   clean_up
   install_brew
+  install_fonts
   install_apps
   install_vim_plugins
   link_dotfiles
@@ -25,8 +26,10 @@ backup_old_dotfiles() {
   [[ -f ~/.gitconfig ]] && mv ~/.gitconfig $BACKUP_DOTFILES_DIR/
   [[ -f ~/.vimrc ]] && mv ~/.vimrc $BACKUP_DOTFILES_DIR/
   [[ -d ~/.vim ]] && mv ~/.vim $BACKUP_DOTFILES_DIR/
+  [[ -f ~/.tmux.conf ]] && mv ~/.tmux.conf $BACKUP_DOTFILES_DIR/
   [[ -f ~/.bashrc ]] && mv ~/.bashrc $BACKUP_DOTFILES_DIR/
-  [[ -f ~/Library/Preferences/com.googlecode.iterm2.plist ]] && mv ~/Library/Preferences/com.googlecode.iterm2.plist $BACKUP_DOTFILES_DIR/
+  [[ -d $XDG_CONFIG_HOME/nvim ]] && mv $XDG_CONFIG_HOME/nvim ~/ $BACKUP_DOTFILES_DIR/
+  [[ -d $XDG_CONFIG_HOME/alacritty ]] && mv $XDG_CONFIG_HOME/alacritty ~/ $BACKUP_DOTFILES_DIR/
 }
 
 clean_up() {
@@ -39,7 +42,9 @@ clean_up() {
   [[ -L ~/.gitignore ]] && rm ~/.gitignore
   [[ -L ~/.vim ]] && rm ~/.vim
   [[ -L ~/.vimrc ]] && rm ~/.vimrc
-  [[ -L ~/Library/Preferences/com.googlecode.iterm2.plist ]] && rm ~/Library/Preferences/com.googlecode.iterm2.plist
+  [[ -L ~/.tmux.conf ]] && rm ~/.tmux.conf
+  [[ -L $XDG_CONFIG_HOME/nvim ]] && rm $XDG_CONFIG_HOME/nvim
+  [[ -L $XDG_CONFIG_HOME/alacritty ]] && rm $XDG_CONFIG_HOME/alacritty
 }
 
 link_dotfiles() {
@@ -48,14 +53,15 @@ link_dotfiles() {
   ln -s $DIR ~/.dotfiles
   ln -s $DIR/git/gitconfig ~/.gitconfig
   ln -s $DIR/git/gitignore ~/.gitignore
-  ln -s $DIR/vim ~/.vim
-  ln -s $DIR/vim/vimrc ~/.vimrc
-  ln -s $DIR/iterm/com.googlecode.iterm2.plist  ~/Library/Preferences/com.googlecode.iterm2.plist
+  ln -s $DIR/nvim ~/.vim
+  ln -s $DIR/nvim/vimrc ~/.vimrc
+  ln -s $DIR/nvim $XDG_CONFIG_HOME/nvim
+  ln -s $DIR/alacritty $XDG_CONFIG_HOME/alacritty
 }
 
 install_vim_plugins() {
-  vim +:PluginUpdate +:PluginClean +qall
-  echo "Installed Vim plugins via vundle"
+  vim +PlugClean! +PlugUpdate +qall
+  echo "Installed Vim plugins via vim-plug"
 }
 
 install_brew() {
@@ -68,8 +74,14 @@ install_brew() {
 }
 
 install_apps() {
-  brew install coreutils watch wget htop vim zsh ag rbenv jenv pyenv nodenv jq
-  brew cask install cyberduck iterm2 visual-studio-code intellij-idea docker postman virtualbox virtualbox-extension-pack google-chrome firefox fontbase
+  brew install coreutils watch wget htop nvim zsh ag rbenv jenv pyenv nodenv jq tmux ctags
+  brew cask install cyberduck alacritty visual-studio-code intellij-idea docker postman virtualbox virtualbox-extension-pack google-chrome firefox fontbase
+}
+
+install_fonts() {
+  brew tap homebrew/cask-fonts
+  brew cask install font-sauce-code-pro-nerd-font
+  brew cask install font-mononoki-nerd-font
 }
 
 configure_stuff() {

@@ -22,6 +22,7 @@ Plug 'tpope/vim-repeat'                                           " Make many mo
 " Search and file exploring
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " Fuzzy search files
 Plug 'junegunn/fzf.vim'                                           " Add nice FZF bindings
+Plug 'preservim/nerdtree'                                         " Add NERDTree as a fileexplorer
 
 " Additional contextual information
 Plug 'AdamWhittingham/vim-copy-filename'                          " Quick shortcuts for copying the file name, path and/or line number
@@ -609,10 +610,7 @@ let g:gutentags_ctags_tagfile = '.tags'
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 
-autocmd FileType netrw nnoremap <buffer><silent>q :bd<CR>
-autocmd FileType netrw nnoremap <buffer><silent><esc> :bd<CR>
-autocmd FileType netrw nnoremap <buffer><silent>a %
-autocmd FileType netrw nnoremap <buffer><silent>u -
+nmap <silent> <Leader>d :NERDTreeToggle<CR>
 
 " ----------------------------------------------
 " Add Misc helpful functions
