@@ -73,7 +73,7 @@ filetype plugin on
 let mapleader = ","
 
 " Set our primary colorscheme. Override this in ~/.vim.local if you want.
-colorscheme molokai
+colorscheme adCode
 
 set t_Co=256                            " Use 256-bit colour in vim
 set termguicolors                       " Use nicer colours in nvim
@@ -334,7 +334,7 @@ endif
 nmap <leader>* <Plug>CtrlSFCwordExec
 
 " F3 to run rubocop
-map <silent> <F3> <esc>:! rubocop -a %<CR>
+nmap <leader>R :! rubocop -a %<CR>
 
 " F5 to reload doc
 map <silent> <F5> <esc>:e %<CR>
