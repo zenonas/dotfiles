@@ -10,3 +10,13 @@ if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 if which nodenv > /dev/null; then eval "$(nodenv init -)"; fi
 if which jenv > /dev/null; then eval "$(jenv init -)"; fi
+
+# GO Lang
+export GOPATH="$HOME/.go"
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:/opt/chromedriver
+
+export M2_HOME=/Applications/ride-5.3.0-mac64/apache-maven-3.1.1
+export PATH=$PATH:$M2_HOME/bin:/opt/tess/bin
+export MAVEN_OPTS="-Xmx2048m -XX:MaxPermSize=2048m"
+export JAVA_OPTS='-Xms1024m -Xmx1024m -XX:PermSize=1024m -XX:+UseConcMarkSweepGC -XX:MaxPermSize=2048m -Djruby.thread.pooling=true'

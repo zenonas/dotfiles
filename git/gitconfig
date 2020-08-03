@@ -1,6 +1,6 @@
 [user]
 	name = Zen Kyprianou
-	email = zen@kyprianou.eu
+	email = zkyprianou@ebay.com
 
 [color]
 	ui = auto
@@ -8,6 +8,8 @@
 [core]
 	editor = nvim
   excludesfile  = ~/.gitignore
+  eol = lf
+  autocrlf = input
 
 [mergetool]
 	keepBackup = false

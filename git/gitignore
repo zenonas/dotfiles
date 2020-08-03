@@ -3,3 +3,5 @@ deployments
 node_modules
 tags
 *.sw*
+.java-version
+.node-version
