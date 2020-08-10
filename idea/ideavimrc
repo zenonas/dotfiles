@@ -1,0 +1,74 @@
+let mapleader = ","
+
+" Basic vim setup
+set autoindent                          " Automatically indent based on syntax detection
+set nowrap                              " Line wrapping off
+set nojoinspaces                        " Use only 1 space after "." when joining lines instead of 2
+set backspace=start,indent,eol
+set breakindent
+set iskeyword-=_                        " Remove _
+
+" Search options
+set hlsearch        " highlight search matches...
+set incsearch       " ...as you type
+set ignorecase      " Generally ignore case
+set smartcase       " Care about case when capital letters show up
+
+
+" <leader>. to view all document buffers
+map <silent> <Leader>. :action RecentFiles<cr>
+
+" Double leader to switch to the previous buffer
+map <silent> <Leader><Leader> :b#<CR>
+
+"  <Leader>f to fuzzy search files
+map <silent> <leader>f :action GotoFile<cr>
+
+"  <Leader>F to fuzzy search files
+map <silent> <leader>F :action FindInPath<cr>
+
+"  <Leader>} to Search for a tag in the current project
+map <silent> <leader>} :action FindUsages<cr>
+
+"  <Leader>{ to Search for a tag in the current buffer
+map <silent> <leader>{ :action FindUsagesInFile<cr>
+
+"  <Leader>r to refactor
+nmap <leader>r :action RefactoringMenu<cr>
+
+" Jump to the definitionof this tag
+nmap <silent> <leader>c :action GotoClass<cr>
+
+" Show all references to the method/variable/etc under the cursor
+map <silent> <leader>] :action FindUsages<cr>
+
+" Leader t/T to send the current file/line to rspec via tmux windows
+nmap <leader>t :action Run<CR>
+nmap <leader>T :action RerunFailedTests<CR>
+
+" C-w s to vertical split
+map <C-w>s :vsplit<CR>
+
+" C-w S to horizontal split
+map <C-w>S :split<CR>
+
+" C-h and C-l to jump left and right between splits
+map <C-h> <C-w>h
+map <C-l> <C-w>l
+" C-J and C-K to jump down and up between splits
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+
+" ----------------------------------------------
+" Copy file path details to the system clipboard
+" ----------------------------------------------
+
+nmap <leader>cp :CopyRelativePath<CR>
+nmap <leader>cP :CopyAbsolutePath<CR>
+nmap <leader>cf :CopyFileName<CR>
+nmap <leader>cd :CopyDirectoryPath<CR>
+nmap <leader>cr :CopyRelativePathAndLine<CR>
+
+nmap <silent> <Leader>d :action ActivateProjectToolWindow<CR>
+
+set clipboard=unnamed
