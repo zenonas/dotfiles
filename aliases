@@ -73,3 +73,10 @@ alias dcd='docker-compose down'
 if type nvim > /dev/null 2>&1; then
   alias vim='nvim'
 fi
+
+# Java aliases
+
+alias mci="mvn clean install"
+alias mcit="mvn clean install -DskipTests"
+alias mcitu="mvn clean install -DskipTests -U"
+alias mciu="mvn clean install -U"

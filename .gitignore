@@ -10,3 +10,5 @@ tmp
 .gitkeep
 nvim/plugins/*
 nvim/undo_data/*
+nvim/sessions/*
+*.log
