@@ -76,7 +76,7 @@ install_brew() {
 
 install_apps() {
   brew install coreutils watch wget htop nvim zsh ag rbenv jenv pyenv nodenv jq tmux ctags
-  brew cask install cyberduck alacritty visual-studio-code intellij-idea docker postman virtualbox virtualbox-extension-pack google-chrome firefox fontbase
+  echo "brew cask install cyberduck alacritty visual-studio-code intellij-idea docker postman virtualbox virtualbox-extension-pack google-chrome firefox fontbase"
 }
 
 install_fonts() {

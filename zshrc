@@ -33,6 +33,9 @@ autoload -Uz async && async
 autoload -U promptinit && promptinit
 prompt pure
 
+# Load loadenv
+source $FUNCTIONS/loadenv
+
 # Set colours up
 export CLICOLOR=1
 export LSCOLORS=Gxfxcxdxbxegedabagacad
