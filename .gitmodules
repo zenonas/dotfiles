@@ -7,3 +7,6 @@
 [submodule "zsh/plugins/zsh-syntax-highlighting"]
 	path = zsh/plugins/zsh-syntax-highlighting
 	url = git@github.com:zsh-users/zsh-syntax-highlighting.git
+[submodule "vim-config"]
+	path = vim-config
+	url = https://github.com/AdamWhittingham/vim-config.git
