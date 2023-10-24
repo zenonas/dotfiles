@@ -69,6 +69,7 @@ alias dce='docker-compose exec'
 alias dcr='docker-compose run'
 alias dcu='docker-compose up'
 alias dcd='docker-compose down'
+alias daa='docker attach $(basename "$PWD")-$(basename "$PWD")-1'
 
 if type nvim > /dev/null 2>&1; then
   alias vim='nvim'
