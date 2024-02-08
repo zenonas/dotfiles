@@ -48,7 +48,7 @@ alias gco='g co'
 alias gd='g d'
 alias gl='g l'
 alias gst='g st'
-alias gp='g push'
+alias gp='g push -u'
 alias gpf='gp --force'
 
 # Proxy aliases
