@@ -4,24 +4,23 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BACKUP_DOTFILES_DIR=~/.dotfiles_backup
 
 run() {
-  [[ "$(uname)" != "Darwin" ]] && echo -n "NOTE: These dotfiles and setup is intended for Mac OS users. Feel free to copy and use any of the stuff here but I can't be bothered to write an install script :D" && exit 1
   if [[ ! -d $BACKUP_DOTFILES_DIR ]]; then
     backup_old_dotfiles
   fi
   mkdir -p $DIR/tmp
   clean_up
   install_deps
-  install_fonts
   install_apps
-  install_vim_plugins
   link_dotfiles
+  setup_nvim
+  setup_copilot
   configure_stuff
 }
 
 backup_old_dotfiles() {
   mkdir -p $BACKUP_DOTFILES_DIR
   echo "Backing up your old dotfiles in $BACKUP_DOTFILES_DIR"
-  [[ -f ~/.bash_profile ]] && mv ~/.bash_profile $BACKUP_DOTFILES_DIR/
+  [[ -f ~/.profile ]] && mv ~/.profile $BACKUP_DOTFILES_DIR/
   [[ -f ~/.zshrc ]] && mv ~/.zshrc $BACKUP_DOTFILES_DIR/
   [[ -f ~/.gitconfig ]] && mv ~/.gitconfig $BACKUP_DOTFILES_DIR/
   [[ -f ~/.vimrc ]] && mv ~/.vimrc $BACKUP_DOTFILES_DIR/
@@ -68,24 +67,41 @@ install_deps() {
   export HOMEBREW_NO_AUTO_UPDATE=1
 }
 
+setup_nvim() {
+  echo "Updating git hook"
+  ./nvim/install-plugin-update-hook.sh
+
+  echo "Updating vim plugins"
+  nvim +"lua require('lazy').sync({wait=true})" +qa
+
+  echo "Updating language tools"
+  nvim --headless "+MasonUpdate" +qa
+}
+
 install_apps() {
   gum spin --title "Installing base apps" -- brew bundle --no-lock -v
 
   [[ "$(uname)" == "Darwin" ]] &&  gum spin --title "Installing MacOS apps" -- brew bundle --no-lock --file=Brewfile.macos
 }
 
-install_fonts() {
-  brew tap homebrew/cask-fonts
-  brew cask install font-sauce-code-pro-nerd-font
-  brew cask install font-mononoki-nerd-font
+setup_copilot() {
+  gum confirm "Do you want to setup Github Copilot?" &&
+    gh auth login --web -h github.com &&
+    gh extension install github/gh-copilot --force
 }
 
 configure_stuff() {
-  read -p 'Enter full name: ' fullname
-  read -p 'Enter email address: ' email
+  gum confirm "Configure your name and email in gitconfig?" && setup_git
+}
 
-  sed -i '' "s/Zen Kyprianou/$fullname/g" $DIR/git/gitconfig
-  sed -i '' "s/zen@kyprianou.eu/$email/g" $DIR/git/gitconfig
+setup_git() {
+  gum log "Setting up gitconfig"
+
+  fullname=$(gum input --placeholder="Enter your fullname")
+  email=$(gum input --placeholder="Enter your email address")
+
+  git config --global user.name "$fullname"
+  git config --global user.email "$email"
 }
 
 run
