@@ -1,11 +1,14 @@
-export PATH=/opt/homebrew/bin:/usr/local/opt/grep/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/texbin:$HOME/.dotfiles/scripts:$PATH
+export PATH=/opt/homebrew/bin:/usr/local/opt/grep/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/texbin:$HOME/.dotfiles/scripts:/snap/bin:$PATH
+
+ if [[ "$(uname)" != "Darwin" ]]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+ fi
 
 # Source Rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # Source Pyenv and Pyenv-virtualenv
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 if which nodenv > /dev/null; then eval "$(nodenv init -)"; fi
@@ -16,7 +19,6 @@ export GOPATH="$HOME/.go"
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:/opt/chromedriver
 
-export M2_HOME=$HOME/code/tools/apache-maven-3.1.1
-export PATH=$PATH:$M2_HOME/bin:/opt/tess/bin
-export MAVEN_OPTS="-Xmx2048m -XX:MaxPermSize=2048m"
-export JAVA_OPTS='-Xms1024m -Xmx2048m -XX:PermSize=1024m -XX:+UseConcMarkSweepGC -XX:MaxPermSize=2048m -Djruby.thread.pooling=true'
+export MAVEN_OPTS="-XX:MaxPermSize=2048m"
+export JAVA_OPTS='-Xms1024m -Xmx2048m -Djruby.thread.pooling=true'
+
