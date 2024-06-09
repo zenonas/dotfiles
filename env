@@ -1,4 +1,26 @@
-export PATH=/opt/homebrew/bin:/usr/local/opt/grep/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/texbin:$HOME/.dotfiles/scripts:/snap/bin:$PATH
+export PATH=/opt/homebrew/bin:/usr/local/opt/grep/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/snap/bin:$PATH
+
+export NERDFONT=1
+export FZF_DEFAULT_COMMAND='rg --files --ignore-file ~/.dotfiles/rgignore'
+export FZF_DEFAULT_OPTS="\
+--layout=reverse \
+--info=inline \
+--height=90% \
+--multi \
+--preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200' \
+--prompt='∼ ' \
+--bind '?:toggle-preview' \
+--bind 'shift-down:preview-down' \
+--bind s'hift-up:preview-up' \
+--bind pg'dn:preview-page-down' \
+--bind pgu'p:preview-page-up' \
+--bind 'ctrl-a:select-all' \
+--bind 'ctrl-y:execute-silent(echo {+} | pbcopy)' \
+--bind 'ctrl-e:execute(echo {+} | xargs -o vim)' \
+"
+
+#Add scripts to the PATH
+export PATH=~/.dotfiles/scripts:$PATH
 
  if [[ "$(uname)" != "Darwin" ]]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

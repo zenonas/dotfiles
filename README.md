@@ -12,4 +12,4 @@ git clone --recursive https://github.com/zenonas/dotfiles.git
 make install
 ```
 
-Any old dot files that get replaced will be moved to ~/.dotfiles_backup
+Any old dot files that get replaced will be moved to ~/.dotfiles_backup 
