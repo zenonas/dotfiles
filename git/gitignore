@@ -3,5 +3,10 @@ deployments
 node_modules
 tags
 *.sw*
-.java-version
-.node-version
+.byebug_history
+.swp
+.swq
+log/
+logs/
+.tags
+tmp/

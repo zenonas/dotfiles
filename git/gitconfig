@@ -1,7 +1,3 @@
-[user]
-	name = Zen Kyprianou
-	email = zen@kyprianou.eu
-
 [color]
 	ui = auto
 
@@ -61,3 +57,10 @@
 
 [branch]
 	autosetuprebase = always
+
+[init]
+  defaultBranch = main
+
+[rebase]
+  autostash = true
+  updateRefs = true
