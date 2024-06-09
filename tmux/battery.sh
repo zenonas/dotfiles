@@ -1,26 +1,44 @@
 #!/bin/bash
 
 GRAPH=( ! ▁ ▂ ▃ ▄ ▅ ▆ ▇ █ )
+NERD_GRAPH=( 󰂃 󰁺 󰁻 󰁼 󰁽 󰁾 󰁿 󰂀 󰁹 )
 
-shell_colours_0="\033[31m"
-shell_colours_1="\033[31m"
-shell_colours_2="\033[31m"
-shell_colours_3="\033[33m"
-shell_colours_4="\033[33m"
-shell_colours_5="\033[32m"
-shell_colours_6="\033[32m"
-shell_colours_7="\033[32m"
-shell_colours_8="\033[32m"
+shell_colours=(
+"31"
+"31"
+"31"
+"33"
+"33"
+"32"
+"32"
+"32"
+"32"
+)
 
-tmux_colours_0="#[fg=colour196]"
-tmux_colours_1="#[fg=colour202]"
-tmux_colours_2="#[fg=colour208]"
-tmux_colours_3="#[fg=colour214]"
-tmux_colours_4="#[fg=colour184]"
-tmux_colours_5="#[fg=colour154]"
-tmux_colours_6="#[fg=colour34]"
-tmux_colours_7="#[fg=colour76]"
-tmux_colours_8="#[fg=colour40]"
+shell_bg_colours=(
+"41"
+"41"
+"41"
+"43"
+"43"
+"42"
+"42"
+"42"
+"42"
+)
+
+
+tmux_colors=(
+"colour196"
+"colour202"
+"colour208"
+"colour214"
+"colour184"
+"colour190"
+"colour22"
+"colour28"
+"colour34"
+)
 
 osx_battery() {
   if [ "$(pmset -g batt | grep -o 'AC Power')" ]; then
@@ -78,7 +96,11 @@ battery_level(){
 ###############################
 
 TMUX=false
-EMOJI=false
+COLOR_BG=false
+SHOW_ICON=true
+SHOW_PERCENT=true
+LIGHT_TEXT=false
+spacer=""
 
 while [[ $# -gt 0 ]]; do
   key="$1"
@@ -86,9 +108,19 @@ while [[ $# -gt 0 ]]; do
     -t)
       TMUX=true
       ;;
-    -e)
-      EMOJI=true
+    -b)
+      COLOR_BG=true
       ;;
+    -i)
+      SHOW_ICON=true
+      SHOW_PERCENT=false
+      ;;
+    -p)
+      SHOW_ICON=false
+      SHOW_PERCENT=true
+      ;;
+    -l)
+      LIGHT_TEXT=true
   esac
   shift
 done
@@ -109,20 +141,40 @@ if [[ ! $BATT_PERCENT ]]; then
 fi
 
 if $TMUX; then
-  var=tmux_colours_$LEVEL
+  spacer=" "
+  batt_color="#[fg=${tmux_colors[LEVEL]}]"
+  if $COLOR_BG; then
+    fg="color234"
+    if $LIGHT_TEXT; then
+      fg="color254"
+    fi
+    batt_color="#[fg=${fg},bg=${tmux_colors[LEVEL]}]"
+  fi
   reset="#[fg=default,bg=default]"
 else
-  var=shell_colours_$LEVEL
+  batt_color="\033[${shell_colours[LEVEL]}m"
+  if $COLOR_BG; then
+    batt_color="\033[0;1;${shell_bg_colours[LEVEL]}m"
+  fi
   reset="\033[0m"
 fi
-colour=${!var}
 
-if [[ $BATT_STATUS == 0 ]] ; then
-  BATT_ICON=''
-elif $EMOJI; then
-  BATT_ICON='⚡'
+if [[ $BATT_STATUS == 1 ]] ; then
+  BATT_ICON='󰂄'
+elif [[ $NERDFONT ]]; then
+  BATT_ICON="${NERD_GRAPH[$LEVEL]}"
 else
-  BATT_ICON='↯'
+  BATT_ICON="${GRAPH[$LEVEL]}"
 fi
 
-echo -e "${colour}${BATT_ICON} ${GRAPH[$LEVEL]} ${BATT_PERCENT}%${reset}"
+icon=""
+if $SHOW_ICON; then
+  icon="${BATT_ICON}"
+fi
+
+percent=""
+if $SHOW_PERCENT; then
+  percent="${BATT_PERCENT}%"
+fi
+
+echo -e "${batt_color}${spacer}${icon} ${percent}${spacer}${reset}"
