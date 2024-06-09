@@ -60,6 +60,10 @@ link_dotfiles() {
 install_deps() {
   if ! which brew  > /dev/null; then /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; fi
 
+  if [[ "$(uname)" != "Darwin" ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  fi
+
   if ! which gum >/dev/null; then
     echo "Gum not found, installing"
     brew install gum &>/dev/null
