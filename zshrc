@@ -29,8 +29,8 @@ fpath+=($FUNCTIONS $PLUGINS/zsh-completions/src  $ZSHDIR/prompts)
 
 # Setup our prompt
 source $FUNCTIONS/prompt_parts
-autoload -Uz async && async
-autoload -U promptinit && promptinit
+autoload -Uz async; async
+autoload -U promptinit; promptinit
 prompt pure
 
 # Load loadenv
@@ -59,6 +59,9 @@ setopt INTERACTIVECOMMENTS  # Ignore everything in a command from a hash to a ne
 
 # Setup command highlighting
 source "$PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+# Setup Github Copilot
+source "$PLUGINS/zsh-github-copilot/zsh-github-copilot.plugin.zsh"
 
 # Setup History
 export HISTFILE=~/.dotfiles/tmp/zsh_history
@@ -191,8 +194,10 @@ autoload -Uz compinit
 compinit -i
 
 compdef g='git'
+compdef d='docker'
 
 bindkey "b" backward-word
 bindkey "f" forward-word
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+bindkey '^[E' zsh_gh_copilot_explain  # bind Ctrl+\ to explain
+bindkey '^[S' zsh_gh_copilot_suggest  # bind Alt+\ to suggest
