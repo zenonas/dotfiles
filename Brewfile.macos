@@ -1,0 +1,20 @@
+# Dev Tools
+cask 'docker'
+cask 'intellij-idea'
+cask 'cyberduck'
+cask 'rapidapi'
+cask 'tableplus'
+
+# Tools for Work
+cask 'google-chrome'
+cask '1password'
+brew '1password-cli'
+cask 'alfred'
+cask 'notion'
+
+# General
+
+# Fonts
+tap "homebrew/cask-fonts"
+cask 'font-hasklig'
+cask 'font-symbols-only-nerd-f

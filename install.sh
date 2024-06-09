@@ -4,13 +4,13 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 BACKUP_DOTFILES_DIR=~/.dotfiles_backup
 
 run() {
- [[ "$(uname)" != "Darwin" ]] && echo -n "NOTE: These dotfiles and setup is intended for Mac OS users. Feel free to copy and use any of the stuff here but I can't be bothered to write an install script :D" && exit 1
+  [[ "$(uname)" != "Darwin" ]] && echo -n "NOTE: These dotfiles and setup is intended for Mac OS users. Feel free to copy and use any of the stuff here but I can't be bothered to write an install script :D" && exit 1
   if [[ ! -d $BACKUP_DOTFILES_DIR ]]; then
     backup_old_dotfiles
   fi
   mkdir -p $DIR/tmp
   clean_up
-  install_brew
+  install_deps
   install_fonts
   install_apps
   install_vim_plugins
@@ -25,11 +25,11 @@ backup_old_dotfiles() {
   [[ -f ~/.zshrc ]] && mv ~/.zshrc $BACKUP_DOTFILES_DIR/
   [[ -f ~/.gitconfig ]] && mv ~/.gitconfig $BACKUP_DOTFILES_DIR/
   [[ -f ~/.vimrc ]] && mv ~/.vimrc $BACKUP_DOTFILES_DIR/
+  [[ -f ~/.ideavimrc ]] && mv ~/.ideavimrc $BACKUP_DOTFILES_DIR/
   [[ -d ~/.vim ]] && mv ~/.vim $BACKUP_DOTFILES_DIR/
   [[ -f ~/.tmux.conf ]] && mv ~/.tmux.conf $BACKUP_DOTFILES_DIR/
   [[ -f ~/.bashrc ]] && mv ~/.bashrc $BACKUP_DOTFILES_DIR/
   [[ -d $XDG_CONFIG_HOME/nvim ]] && mv $XDG_CONFIG_HOME/nvim ~/ $BACKUP_DOTFILES_DIR/
-  [[ -d $XDG_CONFIG_HOME/alacritty ]] && mv $XDG_CONFIG_HOME/alacritty ~/ $BACKUP_DOTFILES_DIR/
 }
 
 clean_up() {
@@ -40,11 +40,11 @@ clean_up() {
   [[ -L ~/.zshrc ]] && rm ~/.zshrc
   [[ -L ~/.gitconfig ]] && rm ~/.gitconfig
   [[ -L ~/.gitignore ]] && rm ~/.gitignore
+  [[ -L ~/.ideavimrc ]] && rm ~/.ideavimrc
   [[ -L ~/.vim ]] && rm ~/.vim
   [[ -L ~/.vimrc ]] && rm ~/.vimrc
   [[ -L ~/.tmux.conf ]] && rm ~/.tmux.conf
   [[ -L $XDG_CONFIG_HOME/nvim ]] && rm $XDG_CONFIG_HOME/nvim
-  [[ -L $XDG_CONFIG_HOME/alacritty ]] && rm $XDG_CONFIG_HOME/alacritty
 }
 
 link_dotfiles() {
@@ -53,30 +53,25 @@ link_dotfiles() {
   ln -s $DIR ~/.dotfiles
   ln -s $DIR/git/gitconfig ~/.gitconfig
   ln -s $DIR/git/gitignore ~/.gitignore
-  ln -s $DIR/nvim ~/.vim
-  ln -s $DIR/nvim/vimrc ~/.vimrc
   ln -s $DIR/tmux/tmux.conf ~/.tmux.conf
+  ln -s $DIR/idea/ideavimrc ~/.ideavimrc
   ln -s $DIR/nvim $XDG_CONFIG_HOME/nvim
-  ln -s $DIR/alacritty $XDG_CONFIG_HOME/alacritty
 }
 
-install_vim_plugins() {
-  vim +PlugClean! +PlugUpdate +qall
-  echo "Installed Vim plugins via vim-plug"
-}
+install_deps() {
+  if ! which brew  > /dev/null; then sh <(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh); fi
 
-install_brew() {
-  [[ ! -f /usr/local/bin/brew ]] && sh <(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)
-  brew update
-  brew cleanup
-  brew upgrade
-  brew cask upgrade
+  if ! which gum >/dev/null; then
+    echo "Gum not found, installing"
+    brew install gum &>/dev/null
+  fi
   export HOMEBREW_NO_AUTO_UPDATE=1
 }
 
 install_apps() {
-  brew install coreutils watch wget htop nvim zsh ag rbenv jenv pyenv nodenv jq tmux ctags
-  echo "brew cask install cyberduck alacritty visual-studio-code intellij-idea docker postman virtualbox virtualbox-extension-pack google-chrome firefox fontbase"
+  gum spin --title "Installing base apps" -- brew bundle --no-lock -v
+
+  [[ "$(uname)" == "Darwin" ]] &&  gum spin --title "Installing MacOS apps" -- brew bundle --no-lock --file=Brewfile.macos
 }
 
 install_fonts() {
