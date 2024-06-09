@@ -58,7 +58,7 @@ link_dotfiles() {
 }
 
 install_deps() {
-  if ! which brew  > /dev/null; then sh <(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh); fi
+  if ! which brew  > /dev/null; then /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; fi
 
   if ! which gum >/dev/null; then
     echo "Gum not found, installing"
