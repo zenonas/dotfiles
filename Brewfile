@@ -1,5 +1,4 @@
 # Dev tools
-brew 'asdf'
 brew 'curl'
 brew 'fzf'
 brew 'git'
@@ -10,8 +9,9 @@ brew 'watch'
 brew 'rbenv'
 brew 'jenv'
 brew 'pyenv'
+brew 'pipenv'
 brew 'nodenv'
-brew '1password-cli'
+brew 'gh'
 
 # Better terminal tools
 brew 'bat'

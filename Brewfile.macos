@@ -11,10 +11,10 @@ cask '1password'
 brew '1password-cli'
 cask 'alfred'
 cask 'notion'
+cask 'slack'
 
 # General
 
 # Fonts
 tap "homebrew/cask-fonts"
 cask 'font-hasklig'
-cask 'font-symbols-only-nerd-f

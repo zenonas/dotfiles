@@ -10,3 +10,6 @@
 [submodule "vim-config"]
 	path = vim-config
 	url = https://github.com/AdamWhittingham/vim-config.git
+[submodule "zsh/plugins/zsh-github-copilot"]
+	path = zsh/plugins/zsh-github-copilot
+	url = https://github.com/loiccoyle/zsh-github-copilot.git
