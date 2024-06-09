@@ -123,5 +123,8 @@ return {
         sorting = defaults.sorting,
       })
     end,
+  },
+  {
+    "github/copilot.vim"
   }
 }
