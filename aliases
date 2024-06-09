@@ -60,15 +60,15 @@ alias formatjson='ruby -rjson -e "puts JSON.pretty_generate(JSON.parse(STDIN.get
 alias formatxml='ruby -e "require \"rexml/document\";d=REXML::Document.new(STDIN.gets);d.write(out=\"\", 4);puts out"'
 alias base64_to_pdf='ruby -rbase64 -rtempfile -e "tmpfile = Tempfile.new([\"base64_to_pdf\", \".pdf\"]); tmpfile.write(Base64.decode64(STDIN.gets)); tmpfile.flush; system(\"open #{tmpfile.path}\")"'
 
-alias dc="docker-compose"
-alias dcra='docker-compose run $(basename "$PWD")'
-alias dcea='docker-compose exec $(basename "$PWD")'
-alias dcl='docker-compose logs -f --tail="100"'
-alias dcb='docker-compose exec'
-alias dce='docker-compose exec'
-alias dcr='docker-compose run'
-alias dcu='docker-compose up'
-alias dcd='docker-compose down'
+alias dc="docker compose"
+alias dcra='docker compose run $(basename "$PWD")'
+alias dcea='docker compose exec $(basename "$PWD")'
+alias dcl='docker compose logs -f --tail="100"'
+alias dcb='docker compose exec'
+alias dce='docker compose exec'
+alias dcr='docker compose run'
+alias dcu='docker compose up'
+alias dcd='docker compose down'
 alias daa='docker attach $(basename "$PWD")-$(basename "$PWD")-1'
 
 if type nvim > /dev/null 2>&1; then
@@ -77,7 +77,7 @@ fi
 
 # Java aliases
 
-alias mci="mvn clean install"
-alias mcit="mvn clean install -DskipTests"
-alias mcitu="mvn clean install -DskipTests -U"
-alias mciu="mvn clean install -U"
+alias mci="./mvnw clean install"
+alias mcit="./mvnw clean install -DskipTests"
+alias mcitu="./mvnw clean install -DskipTests -U"
+alias mciu="./mvnw clean install -U"
