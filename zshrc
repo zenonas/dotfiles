@@ -194,7 +194,6 @@ autoload -Uz compinit
 compinit -i
 
 compdef g='git'
-compdef d='docker'
 
 bindkey "b" backward-word
 bindkey "f" forward-word
