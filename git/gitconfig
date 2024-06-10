@@ -64,3 +64,6 @@
 [rebase]
   autostash = true
   updateRefs = true
+[user]
+	name = Zen Kyprianou
+	email = zen@factory39.io
