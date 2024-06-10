@@ -827,15 +827,15 @@ prompt_pure_setup() {
 	# Set the colors.
 	typeset -gA prompt_pure_colors_default prompt_pure_colors
 	prompt_pure_colors_default=(
-		execution_time       yellow
+		execution_time       magenta
 		git:arrow            cyan
 		git:stash            cyan
-		git:branch           242
+		git:branch           099
 		git:branch:cached    red
 		git:action           yellow
 		git:dirty            218
 		host                 242
-		path                 blue
+		path                 yellow
 		prompt:error         red
 		prompt:success       magenta
 		prompt:continuation  242
@@ -880,11 +880,11 @@ prompt_pure_setup() {
 	# information.
 	local -A ps4_parts
 	ps4_parts=(
-		depth 	  '%F{yellow}${(l:${(%)prompt_pure_debug_depth[1]}::+:)}%f'
+		depth 	  '%F{blue}${(l:${(%)prompt_pure_debug_depth[1]}::+:)}%f'
 		compare   '${${(%)prompt_pure_debug_depth[2]}:#${(%)prompt_pure_debug_depth[3]}}'
-		main      '%F{blue}${${(%)prompt_pure_debug_depth[3]}:t}%f%F{242}:%I%f %F{242}@%f%F{blue}%N%f%F{242}:%i%f'
-		secondary '%F{blue}%N%f%F{242}:%i'
-		prompt 	  '%F{242}>%f '
+		main      '%F{yellow}${${(%)prompt_pure_debug_depth[3]}:t}%f%F{242}:%I%f %F{242}@%f%F{yellow}%N%f%F{242}:%i%f'
+		secondary '%F{yellow}%N%f%F{242}:%i'
+		prompt 	  '%F{105}>%f '
 	)
 	# Combine the parts with conditional logic. First the `:+` operator is
 	# used to replace `compare` either with `main` or an ampty string. Then
