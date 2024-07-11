@@ -1,13 +1,6 @@
 local bar = '▐'
 
 local opts = {
-  signs = {
-    add          = {hl = 'GitSignsAdd'   , text = bar, numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-    change       = {hl = 'GitSignsChange', text = bar, numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-    delete       = {hl = 'GitSignsDelete', text = bar, numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    topdelete    = {hl = 'GitSignsDelete', text = bar, numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    changedelete = {hl = 'GitSignsChange', text = bar, numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-  },
   signcolumn = true,   -- Toggle with `:Gitsigns toggle_signs`
   numhl      = false,  -- Toggle with `:Gitsigns toggle_numhl`
   linehl     = false,  -- Toggle with `:Gitsigns toggle_linehl`
@@ -25,9 +18,6 @@ local opts = {
     delay = 0,
     ignore_whitespace = false,
   },
-  current_line_blame_formatter_opts = {
-    relative_time = false
-  },
   sign_priority = 6,
   update_debounce = 100,
   status_formatter = nil, -- Use default
@@ -39,9 +29,6 @@ local opts = {
     relative = 'cursor',
     row = 0,
     col = 1
-  },
-  yadm = {
-    enable = false
   },
 }
 

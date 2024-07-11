@@ -1,6 +1,3 @@
--- Transparent background
-vim.cmd([[hi Normal guibg=NONE ctermbg=NONE]])
-
 -- Only show the cursor in the active buffer
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
   pattern = "*",
@@ -13,6 +10,16 @@ vim.api.nvim_create_autocmd({ "BufLeave" }, {
   command = "setlocal nocursorline",
   desc = "Hide cursor in inactive pane",
 })
+
+-- Switch.vim customisation
+vim.cmd(
+  [[
+  let g:switch_custom_definitions = [
+  \  ['proposed', 'accepted', 'superceded', 'rejected']
+  \]
+  ]]
+)
+-----
 
 function _G.set_mark()
   print("Set mark: ")

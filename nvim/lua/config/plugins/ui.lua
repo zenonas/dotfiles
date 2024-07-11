@@ -1,16 +1,25 @@
 return {
-  -- A bright colorscheme for bright engineers
   {
-    "AdamWhittingham/vim-adcode-theme",
+    "f-person/auto-dark-mode.nvim",
     lazy = false,
     priority = 1000,
-    config = function() vim.cmd([[colorscheme adCode]]) end,
-  },
-
-  -- Lovely colorscheme with a reasonable light mode option
-  {
-    'folke/tokyonight.nvim',
-    lazy = true,
+    opts = {
+      update_interval = 1000,
+      set_dark_mode = function()
+        vim.api.nvim_set_option_value("background", "dark", {})
+        vim.cmd("colorscheme adCode")
+        vim.cmd([[hi Normal guibg=NONE ctermbg=NONE]]) -- transparent background
+      end,
+      set_light_mode = function()
+        vim.api.nvim_set_option_value("background", "light", {})
+        vim.cmd("colorscheme tokyonight-day")
+        vim.cmd([[hi Normal guibg=NONE ctermbg=NONE]]) -- transparent background
+      end,
+    },
+    dependencies = {
+      "AdamWhittingham/vim-adcode-theme",
+      'folke/tokyonight.nvim',
+    }
   },
 
   -- Help learn/relearn/remember key bindings with a handy pop up
@@ -20,8 +29,8 @@ return {
     config = true,
   },
 
-   -- Show colour swatches in virtualtext
-    {
+  -- Show colour swatches in virtualtext
+  {
     "brenoprata10/nvim-highlight-colors",
     event = "VeryLazy",
     opts = {
@@ -37,7 +46,11 @@ return {
     'stevearc/oil.nvim',
     event = "VeryLazy",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = true
+    opts = {
+      view_options = {
+        show_hidden = true,
+      }
+    }
   },
 
   -- Visualise the undo tree and make it easy to navigate
@@ -86,7 +99,7 @@ return {
       scope = {
         enabled = true,
         exclude = {
-           node_type = { ruby = { "module", "class" } },
+          node_type = { ruby = { "module", "class" } },
         }
       },
       exclude = {
@@ -102,5 +115,14 @@ return {
         },
       },
     },
+  },
+
+  {
+    "OXY2DEV/markview.nvim",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons", -- Used by the code bloxks
+    },
+
+    opts = {}
   },
 }
