@@ -7,9 +7,9 @@ run() {
   if [[ ! -d $BACKUP_DOTFILES_DIR ]]; then
     backup_old_dotfiles
   fi
+  install_deps
   mkdir -p $DIR/tmp
   clean_up
-  install_deps
   install_apps
   link_dotfiles
   setup_nvim
