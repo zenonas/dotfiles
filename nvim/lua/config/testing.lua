@@ -23,8 +23,8 @@ function TestRunner()
 
   if ft == "ruby" then
     test_keymaps = {
-      t = { [[:call InvokeViaTmux("rspec", expand("%:p") . " -fdoc")<CR>]], "Test file" },
-      T = { [[:call InvokeViaTmux("rspec", expand("%:p") . ":" . line('.'))<CR>]], "Test line" },
+      t = { [[:call InvokeViaTmux("dcea rails test", expand("%:.") . "")<CR>]], "Test file" },
+      T = { [[:call InvokeViaTmux("dcea rails test", expand("%:.") . ":" . line('.'))<CR>]], "Test line" },
     }
   elseif ft == "go" then
     test_keymaps = {
