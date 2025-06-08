@@ -4,15 +4,13 @@ return {
   lazy = false,
   version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
   opts = {
-    -- add any opts here
-    -- for example
-    provider = "claude",
-    claude = {
-      endpoint = "https://api.anthropic.com",
-      model = "claude-3-7-sonnet-20250219",
-      temperature = 0,
-      max_tokens = 4096,
-    },
+    provider = "copilot",
+    providers = {
+      copilot = {
+        model = "claude-3.5-sonnet", -- Use Copilot Sonnet 3.5 model
+      },
+
+    }
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
   build = "make",
@@ -25,6 +23,7 @@ return {
     --- The below dependencies are optional,
     "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
     "ibhagwan/fzf-lua", -- for file_selector provider fzf
+    "zbirenbaum/copilot.lua",
     {
       -- support for image pasting
       "HakonHarnes/img-clip.nvim",
