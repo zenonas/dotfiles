@@ -48,4 +48,25 @@ return {
     event = "VeryLazy",
     opts = { mapping = nil }
   },
+
+  -- Better find and replace
+  {
+    'MagicDuck/grug-far.nvim',
+    config = function()
+      require('grug-far').setup({});
+    end
+  },
+
+
+  -- Show and search paths in JSON and Yaml
+  {
+    "jfryy/keytrail.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      require("keytrail").setup()
+    end,
+  }
 }

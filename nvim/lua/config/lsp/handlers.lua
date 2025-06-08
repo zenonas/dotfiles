@@ -31,14 +31,6 @@ M.init = function()
   }
 
   vim.diagnostic.config(config)
-
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = borderStyle,
-  })
-
-  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = borderStyle,
-  })
 end
 
 M.on_attach = function(client, bufnr)
@@ -81,11 +73,6 @@ M.setup = function(servers)
       on_attach = M.on_attach,
       capabilities = M.capabilities,
     }
-
-    local has_custom_opts, server_custom_opts = pcall(require, "config.lsp.settings." .. server)
-    if has_custom_opts then
-      opts = vim.tbl_deep_extend("force", opts, server_custom_opts)
-    end
 
     lspconfig[server].setup(opts)
   end

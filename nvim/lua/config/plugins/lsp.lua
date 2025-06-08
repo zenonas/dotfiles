@@ -1,31 +1,13 @@
 return {
   {
-    "williamboman/mason.nvim", -- Install Language servers
-    event = "VeryLazy",
-    build = ":MasonUpdate", -- :MasonUpdate updates registry contents
-    config = true,
-  },
-
-  {
-    "williamboman/mason-lspconfig.nvim", -- Configure language servers
-    event = "VeryLazy",
-    opts = function()
+    "mason-org/mason-lspconfig.nvim",
+    opts = {
       ensure_installed = require('config.lsp').servers
-      automatic_installation = true
-    end
-  },
-
-  {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
-      'cmp-nvim-lsp',
-      "b0o/schemastore.nvim",
     },
-    config = function()
-      require("config.lsp").setup()
-    end
+    dependencies = {
+        { "mason-org/mason.nvim", opts = {} },
+        "neovim/nvim-lspconfig",
+    },
   },
 
   -- Pop up function definitions when typing a function call
@@ -56,8 +38,11 @@ return {
         },
       },
     }
-
   },
 
-  { 'j-hui/fidget.nvim', config = true,  tag = 'legacy' },        -- Show LSP progress feedback
+  {
+    'j-hui/fidget.nvim',
+    config = true,
+    tag = 'legacy',
+  },        -- Show LSP progress feedback
 }
