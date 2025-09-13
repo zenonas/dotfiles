@@ -23,6 +23,7 @@ local treesitter_opts = {
     "ruby",
     "scss",
     "sql",
+    "terraform",
     "toml",
     "tsx",
     "typescript",
@@ -91,8 +92,8 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    lazy = false,
     branch = "master",
-    event = { "BufReadPost", "BufNewFile" },
     opts = treesitter_opts,
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
