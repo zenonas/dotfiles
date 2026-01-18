@@ -43,7 +43,7 @@ wk.add({
   { "<leader>.",        cmd[[FzfLua buffers]],                        desc = "Switch buffers" },
   { "<leader>?",        cmd[[FzfLua keymaps]],                        desc = "Search vim keymaps", icon = "" },
   { "<leader>f",        cmd[[FzfLua files]],                          desc = "Find file" },
-  { "<leader>F",        cmd[[FzfLua live_grep_glob]],                 desc = "Find text" },
+  { "<leader>F",        cmd[[lua FzfLua.live_grep()]],                desc = "Find text" },
   { "<leader>G",        cmd[[FzfLua resume]],                         desc = "Resume search" },
   { "<leader>h",        cmd[[nohlsearch]],                            desc = "Toggle search highlight" },
   { "<leader>j",        cmd[[FzfLua jumps]],                          desc = "Show Jumplist" },
@@ -108,7 +108,7 @@ wk.add({
   { "ga.",        cmd[[lua require('textcase').current_word('to_dot_case')]],      desc = "Change word to dot case" },
   { "ga/",        cmd[[lua require('textcase').current_word('to_path_case')]],      desc = "Change word to path case" },
 
-  { "gt",         cmd[[lua _G.translate()]],                   desc = "Translate and replace", mode = "v" },
+  { "gT",         cmd[[lua _G.translate()]],                   desc = "Translate and replace", mode = "v" },
   { "q",          desc = "Record macro" },
   { "<leader>i",  "m`gg=G``",                                  desc = "Reindent file" },
   { "<leader>sp", cmd[[FzfLua spell_suggest]],              desc = "Suggest spelling fixes" },
