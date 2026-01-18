@@ -67,11 +67,13 @@ endfunction
 
 vim.cmd [[
 function! InvokeViaTmux(cmd, test)
-  let l:targetWindow = trim(system('tmux list-windows | grep "test" | cut -f1 -d":" | head -1'))
+  let l:targetWindow = trim(system('tmux list-windows | grep "nvim" | cut -f1 -d":" | head -1'))
   if empty(l:targetWindow)
     let l:targetWindow = 3
+    let l:target = "-t " . l:targetWindow . ".1"
+  else
+    let l:target = "-t " . l:targetWindow . ".2"
   endif
-  let l:target = "-t " . l:targetWindow . ".1"
   let l:command = "tmux send-keys" . " " . l:target . ' "' . a:cmd . " "  . a:test . '" Enter'
   echom "Running " . a:test . " in window " . l:targetWindow
   let output = system(l:command)

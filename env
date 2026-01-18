@@ -1,4 +1,4 @@
-export PATH=/opt/homebrew/bin:/usr/local/opt/grep/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/snap/bin:$PATH
+export PATH=/opt/homebrew/opt/libpq/bin:/opt/homebrew/bin:/usr/local/opt/grep/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/snap/bin:$PATH
 
 export NERDFONT=1
 export FZF_DEFAULT_COMMAND='rg --files --ignore-file ~/.dotfiles/rgignore'
@@ -29,9 +29,6 @@ export PATH=~/.dotfiles/scripts:$PATH
 # Source Rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
-# Source Pyenv and Pyenv-virtualenv
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 if which nodenv > /dev/null; then eval "$(nodenv init -)"; fi
 if which jenv > /dev/null; then eval "$(jenv init -)"; fi
@@ -43,4 +40,9 @@ export PATH=$PATH:/opt/chromedriver
 
 export MAVEN_OPTS="-XX:MaxPermSize=2048m"
 export JAVA_OPTS='-Xms1024m -Xmx2048m -Djruby.thread.pooling=true'
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+[ -f ~/.dotfiles/env.local ] && source ~/.dotfiles/env.local
 
