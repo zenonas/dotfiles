@@ -13,3 +13,5 @@ nvim/undo_data/*
 nvim/sessions/*
 *.log
 env.local
+!tmux/plugins/.keep
+tmux/plugins/*
