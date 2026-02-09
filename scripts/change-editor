@@ -1,0 +1,12 @@
+#! /bin/bash
+#
+# Change default editor for the listed filetypes on MacOS.
+# Required duti to be installed. `brew install duti`
+
+extensions=(public.plain-text public.unix-executable .c .cpp .cs .css .csv .xml .env .erb .haml .hs .java .js .rb .toml .crt .key .json .md .sass .scss .sh .ts .txt .yaml .yml .zsh .sql .py .go .rs .kt .swift .php .lua .vim .r .scala .clj .ex .exs .erl .pl .pm .dart .vue .jsx .tsx .html .htm .svelte .astro .prisma .proto .graphql .gql .tf .hcl .nim .zig .v .dockerfile .makefile .cmake .gradle .config .conf .ini .lock .log)
+neovim=com.apple.automator.Neovim-Tmux
+
+for extension in "${extensions[@]}"; do
+  echo "duti -s $neovim $extension"
+  duti -s $editor $extension all
+done

@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Hardcode Neovim path so Finder/Automator environment doesn't break it.
+# Change this if your nvim is elsewhere:
+NVIM="/opt/homebrew/bin/nvim"
+
+SESSION="main"
+FILE="${1:-}"
+
+if [[ -z "$FILE" ]]; then
+  echo "Usage: nvim-tmux <file>" >&2
+  exit 2
+fi
+
+# Fallback if NVIM path is wrong
+if [[ ! -x "$NVIM" ]]; then
+  # Try common locations before giving up
+  for cand in /opt/homebrew/bin/nvim /usr/local/bin/nvim /usr/bin/nvim; do
+    if [[ -x "$cand" ]]; then NVIM="$cand"; break; fi
+  done
+fi
+
+if [[ ! -x "$NVIM" ]]; then
+  echo "Neovim not found. Set NVIM=... in $0" >&2
+  exit 127
+fi
+
+# If we're already inside tmux, just open in the current client/pane.
+if [[ -n "${TMUX:-}" ]]; then
+  exec "$NVIM" "$FILE"
+fi
+
+# If tmux isn't installed, just open nvim directly.
+if ! command -v tmux >/dev/null 2>&1; then
+  exec "$NVIM" "$FILE"
+fi
+
+# Ensure session exists
+tmux has-session -t "$SESSION" 2>/dev/null || tmux new-session -d -s "$SESSION"
+
+# Open the file in a new tmux window and attach.
+# This avoids fragile send-keys timing issues.
+tmux new-window -t "$SESSION:" -n "nvim" "$NVIM" "$FILE"
+exec tmux attach -t "$SESSION"
