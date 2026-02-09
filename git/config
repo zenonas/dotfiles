@@ -3,18 +3,19 @@
 
 [core]
 	editor = nvim
-  excludesfile  = ~/.gitignore
+  excludesfile  = ~/.config/git/ignore
   eol = lf
   autocrlf = input
 
+[merge]
+  tool = nvim
+  keepBackup = false
+  defaultToUpstream = true
 [mergetool]
 	keepBackup = false
-[merge]
-  keepBackup = false
-  tool = diffmerge
-  defaultToUpstream = true
-[mergetool "diffmerge"]
-	cmd = "diffmerge --nosplash --merge --result=\"$MERGED\" \"$LOCAL\" \"$(if test -f \"$BASE\"; then echo \"$BASE\"; else echo \"$LOCAL\"; fi)\" \"$REMOTE\""
+  prompt = false
+[mergetool "nvim"]
+  cmd = nvim -n -c "DiffviewOpen" "$MERGE"
 	trustExitCode = true
 
 [alias]
