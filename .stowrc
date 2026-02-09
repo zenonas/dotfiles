@@ -1,0 +1,12 @@
+--target=~/.config
+--ignore=.stowrc
+--ignore=.notags
+--ignore=DS_Store
+--ignore=Brewfile
+--ignore=Brewfile.macos
+--ignore=LICENCE
+--ignore=Makefile
+--ignore=README.md
+--ignore=rgignore
+--ignore=install.sh
+--ignore=scripts

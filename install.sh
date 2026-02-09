@@ -48,13 +48,8 @@ clean_up() {
 
 link_dotfiles() {
   echo "Symlinking dotfiles"
-  ln -s $DIR/zshrc ~/.zshrc
-  ln -s $DIR ~/.dotfiles
-  ln -s $DIR/git/gitconfig ~/.gitconfig
-  ln -s $DIR/git/gitignore ~/.gitignore
-  ln -s $DIR/tmux/tmux.conf ~/.tmux.conf
-  ln -s $DIR/idea/ideavimrc ~/.ideavimrc
-  ln -s $DIR/nvim $XDG_CONFIG_HOME/nvim
+  ln -s $XDG_CONFIG_HOME/zshrc/zshrc ~/.zshrc
+  stow -v .
 }
 
 install_deps() {
@@ -67,6 +62,11 @@ install_deps() {
   if ! which gum >/dev/null; then
     echo "Gum not found, installing"
     brew install gum &>/dev/null
+  fi
+
+  if ! which stow >/dev/null; then
+    echo "Stow not found, installing"
+    brew install stow &>/dev/null
   fi
   export HOMEBREW_NO_AUTO_UPDATE=1
 }
