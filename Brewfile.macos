@@ -1,20 +1,35 @@
 # Dev Tools
-cask 'docker'
-cask 'intellij-idea'
+cask 'docker-desktop'
 cask 'cyberduck'
-cask 'rapidapi'
+cask 'postman'
 cask 'tableplus'
+cask 'claude-code'
+cask 'visual-studio-code'
+cask 'wezterm'
+cask 'ghostty'
 
 # Tools for Work
 cask 'google-chrome'
 cask '1password'
 brew '1password-cli'
-cask 'alfred'
 cask 'notion'
-cask 'slack'
+cask 'figma'
+cask 'ngrok'
+cask 'zoom'
 
 # General
+cask 'discord'
+cask 'mimestream'
+cask 'vlc'
+cask 'obsidian'
+cask 'cloudflare-warp'
+cask 'kindavim'
+
+tap "nikitabobko/tap"
+cask "aerospace"
 
 # Fonts
 tap "homebrew/cask-fonts"
 cask 'font-hasklig'
+cask 'font-jetbrains-mono-nerd-font'
+cask 'font-hack-nerd-font'
