@@ -1,0 +1,8 @@
+font-size = 16
+background-blur-radius = 40
+mouse-hide-while-typing = true
+window-decoration = false
+macos-option-as-alt = true
+background-opacity = 0.90
+theme = "Catppuccin Mocha"
+command = ~/.dotfiles/scripts/start-tmux
