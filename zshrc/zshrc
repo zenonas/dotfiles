@@ -70,6 +70,9 @@ setopt INC_APPEND_HISTORY # adds history incrementally
 setopt HIST_IGNORE_ALL_DUPS  # don't record dupes in history
 setopt HIST_REDUCE_BLANKS
 
+#Set vim mode
+bindkey -v
+
 bindkey '^P' up-history
 bindkey '^N' down-history
 bindkey '^?' backward-delete-char
@@ -198,5 +201,3 @@ bindkey "f" forward-word
 bindkey '^[E' zsh_gh_copilot_explain  # bind Ctrl+\ to explain
 bindkey '^[S' zsh_gh_copilot_suggest  # bind Alt+\ to suggest
 
-#Set vim mode
-bindkey -v

@@ -1,6 +1,10 @@
 add_newline = false
 # A minimal left prompt
-format = """$directory$character"""
+format = """
+$username\
+$hostname\
+$directory\
+$character"""
 palette = "catppuccin_mocha"
 # move the rest of the prompt to the right
 right_format = """$all"""
@@ -13,6 +17,9 @@ success_symbol = '[➜](bold green)'
 [directory.substitutions]
 '~/tests/starship-custom' = 'work-project'
 
+[directory]
+truncation_length = 5
+
 [git_branch]
 format =  '[$symbol$branch(:$remote_branch)]($style)'
 
@@ -23,7 +30,6 @@ style = 'bold blue'
 symbol = " "
 
 [golang]
-format = '[ ](bold cyan)'
 
 [ruby]
 format = "[🔺($version)]($style) "
