@@ -1,0 +1,110 @@
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+### Command Aliases ###
+alias psg='ps -ef|grep '
+alias sshp='ssh -o"PreferredAuthentications=password"'
+alias ack='ack-grep'
+
+# ls aliases #
+alias ls='ls --color=auto'
+alias l='ls -CF'
+alias la='ls -A'
+alias ll='ls -alF'
+alias lh='ls -alFh'
+
+# brew #
+alias bup='brew update && brew upgrade'
+alias bis='brew install'
+
+# Ruby aliases #
+alias cucumber='bundle exec cucumber --color'
+alias knife='bundle exec knife'
+alias guard='bundle exec guard'
+alias rake='bundle exec rake'
+alias rspec='bundle exec rspec --color'
+alias prp='git pull && rake && git push'
+
+# Python aliases #
+alias pis='pyenv install'
+alias pvc='pyenv virtualenv'
+alias pva='pyenv activate'
+alias v='mvim'
+
+# Perlbrew aliases #
+alias pbi='perlbrew install'
+alias pbs='perlbrew#
+
+# rsync aliases #
+alias rsync-copy='rsync --verbose --progress --human-readable --compress --archive --hard-links --one-file-system'
+alias rsync-move='r-copy --remove-source-files'
+alias rsync-update='r-copy --update' switch'
+
+# Git aliases #
+alias g='git'
+alias ga='g a'
+alias gaa='g aa'
+alias gc='g c'
+alias gc-m='g c -m'
+alias gcm='git commit -m'
+alias gco='g co'
+alias gd='g d'
+alias gl='g l'
+alias gst='g st'
+alias gp='g push -u'
+alias gpf='gp --force'
+
+# Proxy aliases
+alias pp="source $DIR/scripts/proxy on"
+alias np="source $DIR/scripts/proxy off"
+
+# Ruby shorthands
+alias formatjson='ruby -rjson -e "puts JSON.pretty_generate(JSON.parse(STDIN.gets))"'
+alias formatxml='ruby -e "require \"rexml/document\";d=REXML::Document.new(STDIN.gets);d.write(out=\"\", 4);puts out"'
+alias base64_to_pdf='ruby -rbase64 -rtempfile -e "tmpfile = Tempfile.new([\"base64_to_pdf\", \".pdf\"]); tmpfile.write(Base64.decode64(STDIN.gets)); tmpfile.flush; system(\"open #{tmpfile.path}\")"'
+
+alias dc="docker compose"
+alias dcra='docker compose run $(basename "$PWD")'
+alias dcea='docker compose exec $(basename "$PWD")'
+alias dcl='docker compose logs -f --tail="100"'
+alias dcb='docker compose exec'
+alias dce='docker compose exec'
+alias dcr='docker compose run'
+alias dcu='docker compose up'
+alias dcd='docker compose down'
+alias daa='docker attach $(basename "$PWD")-$(basename "$PWD")-1'
+alias dca='dcu -d && daa'
+
+if type nvim > /dev/null 2>&1; then
+  alias vim='nvim'
+fi
+
+## tmux aliases
+alias tl='tmux attach -t "$(tmux list-sessions | fzf --no-preview --select-1 | cut -d':' -f1)"'
+alias tls='tmux ls'
+alias tm='tmux_create_or_attach'
+alias tma='tmux_new_attach_to_session'
+alias tk='tmux kill-session -t'
+
+# Java aliases
+
+alias mci="./mvnw clean install"
+alias mcit="./mvnw clean install -DskipTests"
+alias mcitu="./mvnw clean install -DskipTests -U"
+alias mciu="./mvnw clean install -U"
+
+# If eza is installed, use it for better ls
+if type eza &>/dev/null; then
+  alias ls='eza'
+  alias l="eza -l --icons --git -a"
+  alias lt="eza --tree --level=2 --long --icons --git"
+  alias ltree="eza --tree --level=2  --icons --git"
+fi
+
+if ( type bat &>/dev/null ) ; then
+  alias cat='bat'
+fi
+
+# Better CLI tools when available
+if ( type prettyping &>/dev/null ) ; then
+  alias ping='prettyping'
+fi

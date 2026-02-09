@@ -8,30 +8,27 @@ function source_if_present(){
 setopt HIST_IGNORE_DUPS
 
 DOTFILES="$HOME/.dotfiles"
-ZSHDIR="$DOTFILES/zsh"
+
+ZSHDIR="$DOTFILES/zshrc"
 FUNCTIONS="$ZSHDIR/functions"
 PLUGINS="$ZSHDIR/plugins"
 
-source_if_present "$DOTFILES/env"
-source_if_present "$DOTFILES/aliases"
-
-#Set vim mode
-bindkey -v
+source_if_present "$DOTFILES/zshrc/env"
+source_if_present "$DOTFILES/zshrc/aliases"
 
 #ensure XDG_CONFIG_HOME is setup
 [[ ! -d $XDG_CONFIG_HOME ]] && mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
 export XDG_CONFIG_HOME=$HOME/.config
+eval "$(starship init zsh)"
 
 # Load direnv if it is available
 if type direnv > /dev/null; then eval "$(direnv hook zsh)"; fi
 
-fpath+=($FUNCTIONS $PLUGINS/zsh-completions/src  $ZSHDIR/prompts)
+fpath+=($FUNCTIONS $PLUGINS/zsh-completions/src)
 
-# Setup our prompt
-source $FUNCTIONS/prompt_parts
-autoload -Uz async; async
-autoload -U promptinit; promptinit
-prompt pure
+setopt prompt_subst
+eval "$(starship init zsh)"
+export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
 # Load loadenv
 source $FUNCTIONS/loadenv
@@ -39,7 +36,7 @@ source $FUNCTIONS/loadenv
 # Set colours up
 export CLICOLOR=1
 export LSCOLORS=Gxfxcxdxbxegedabagacad
-export EDITOR=vim
+export EDITOR="$(brew --prefix)/bin/nvim"
 
 setopt NO_BEEP
 
@@ -64,7 +61,7 @@ source "$PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 source "$PLUGINS/zsh-github-copilot/zsh-github-copilot.plugin.zsh"
 
 # Setup History
-export HISTFILE=~/.dotfiles/tmp/zsh_history
+export HISTFILE=~/.dotfiles/zshrc/tmp/zsh_history
 export HISTSIZE=5000
 export SAVEHIST=5000
 setopt HIST_VERIFY
@@ -99,7 +96,7 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # Cache auto completions
 zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.dotfiles/tmp/zsh-cache
+zstyle ':completion:*' cache-path ~/.dotfiles/zshrc/tmp/zsh-cache
 
 zstyle ':completion:*' format ' %F{yellow}%d%f'
 zstyle ':completion:*' group-name ''
@@ -200,3 +197,6 @@ bindkey "f" forward-word
 
 bindkey '^[E' zsh_gh_copilot_explain  # bind Ctrl+\ to explain
 bindkey '^[S' zsh_gh_copilot_suggest  # bind Alt+\ to suggest
+
+#Set vim mode
+bindkey -v

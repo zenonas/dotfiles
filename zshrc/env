@@ -1,0 +1,48 @@
+export PATH=/opt/homebrew/opt/libpq/bin:/opt/homebrew/bin:/usr/local/opt/grep/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/snap/bin:$PATH
+
+export NERDFONT=1
+export FZF_DEFAULT_COMMAND='rg --files --ignore-file ~/.dotfiles/rgignore'
+export FZF_DEFAULT_OPTS="\
+--layout=reverse \
+--info=inline \
+--height=90% \
+--multi \
+--preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200' \
+--prompt='∼ ' \
+--bind '?:toggle-preview' \
+--bind 'shift-down:preview-down' \
+--bind s'hift-up:preview-up' \
+--bind pg'dn:preview-page-down' \
+--bind pgu'p:preview-page-up' \
+--bind 'ctrl-a:select-all' \
+--bind 'ctrl-y:execute-silent(echo {+} | pbcopy)' \
+--bind 'ctrl-e:execute(echo {+} | xargs -o vim)' \
+"
+
+#Add scripts to the PATH
+export PATH=~/.dotfiles/scripts:$PATH
+
+ if [[ "$(uname)" != "Darwin" ]]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+ fi
+
+# Source Rbenv
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+if which nodenv > /dev/null; then eval "$(nodenv init -)"; fi
+if which jenv > /dev/null; then eval "$(jenv init -)"; fi
+
+# GO Lang
+export GOPATH="$HOME/.go"
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:/opt/chromedriver
+
+export MAVEN_OPTS="-XX:MaxPermSize=2048m"
+export JAVA_OPTS='-Xms1024m -Xmx2048m -Djruby.thread.pooling=true'
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+[ -f ~/.env.local ] && source ~/.env.local
+
