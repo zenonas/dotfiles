@@ -23,7 +23,6 @@ cask 'mimestream'
 cask 'vlc'
 cask 'obsidian'
 cask 'cloudflare-warp'
-cask 'kindavim'
 
 tap "nikitabobko/tap"
 cask "aerospace"

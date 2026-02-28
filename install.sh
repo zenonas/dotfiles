@@ -47,6 +47,8 @@ clean_up() {
 }
 
 link_dotfiles() {
+  export XDG_CONFIG_HOME=~/.config
+  mkdir -p $XDG_CONFIG_HOME
   echo "Symlinking dotfiles"
   ln -s $XDG_CONFIG_HOME/zshrc/zshrc ~/.zshrc
   stow -v .
@@ -84,9 +86,9 @@ setup_nvim() {
 }
 
 install_apps() {
-  gum spin --title "Installing base apps" -- brew bundle --no-lock -v
+  gum spin --title "Installing base apps" -- brew bundle -v
 
-  [[ "$(uname)" == "Darwin" ]] &&  gum spin --title "Installing MacOS apps" -- brew bundle --no-lock --file=Brewfile.macos
+  [[ "$(uname)" == "Darwin" ]] &&  gum spin --title "Installing MacOS apps" -- brew bundle --file=Brewfile.macos
 }
 
 setup_copilot() {
