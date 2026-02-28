@@ -54,6 +54,7 @@ link_dotfiles() {
 
 install_deps() {
   if ! which brew  > /dev/null; then /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; fi
+  export PATH=/opt/homebrew/opt/libpq/bin:/opt/homebrew/bin:/usr/local/opt/grep/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/snap/bin:$PATH
 
   if [[ "$(uname)" != "Darwin" ]]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
