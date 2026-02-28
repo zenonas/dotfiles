@@ -207,8 +207,8 @@ alt-w = ['exec-and-forget open -a /Applications/WezTerm.app', 'mode main']
 
 [workspace-to-monitor-force-assignment]
 1 = '^Built-in.*$'
-2 = ['^Gigabyte.*$', 'Benq.*$']
-3 = '^LS32D80.*$'
+2 = '^LS32D80.*$'
+3 = ['^Gigabyte.*$', 'BenQ.*$']
 #     4 = '^dell$'
 #     5 = 'main'
 #     6 = '^elgato$'

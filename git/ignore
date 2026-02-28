@@ -10,3 +10,5 @@ log/
 logs/
 .tags
 tmp/
+
+**/.claude/settings.local.json
