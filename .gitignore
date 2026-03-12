@@ -16,6 +16,5 @@ env.local
 tmux/plugins/*
 !tmux/plugins/.keep
 colima/*
-!colima/default/
 !colima/default/colima.yaml
 

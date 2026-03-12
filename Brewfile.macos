@@ -1,5 +1,4 @@
 # Dev Tools
-cask 'docker-desktop'
 cask 'cyberduck'
 cask 'postman'
 cask 'tableplus'
@@ -7,11 +6,12 @@ cask 'claude-code'
 cask 'visual-studio-code'
 cask 'wezterm'
 cask 'ghostty'
+brew 'colima', restart_service: :always
 
 # Tools for Work
 cask 'google-chrome'
 cask '1password'
-brew '1password-cli'
+cask '1password-cli'
 cask 'notion'
 cask 'figma'
 cask 'ngrok'
@@ -28,7 +28,6 @@ tap "nikitabobko/tap"
 cask "aerospace"
 
 # Fonts
-tap "homebrew/cask-fonts"
 cask 'font-hasklig'
 cask 'font-jetbrains-mono-nerd-font'
 cask 'font-hack-nerd-font'
