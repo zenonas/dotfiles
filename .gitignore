@@ -13,5 +13,9 @@ nvim/undo_data/*
 nvim/sessions/*
 *.log
 env.local
-!tmux/plugins/.keep
 tmux/plugins/*
+!tmux/plugins/.keep
+colima/*
+!colima/default/
+!colima/default/colima.yaml
+
