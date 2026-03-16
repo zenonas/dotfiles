@@ -37,6 +37,7 @@ brew 'tree'
 brew 'vale'
 brew 'watch'
 brew 'duti'
+brew 'fastfetch'
 
 # Libs
 brew 'ffmpeg'
