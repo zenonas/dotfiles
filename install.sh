@@ -13,8 +13,8 @@ run() {
   install_apps
   link_dotfiles
   setup_nvim
-  setup_copilot
-  configure_stuff
+  [[ "$DEBIAN_FRONTEND" -ne "noninteractive" ]] && setup_copilot
+  [[ "$DEBIAN_FRONTEND" -ne "noninteractive" ]] && configure_stuff
 }
 
 backup_old_dotfiles() {

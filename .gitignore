@@ -18,3 +18,5 @@ tmux/plugins/*
 colima/*
 !colima/default/colima.yaml
 
+lima/*
+!lima/templates/devbox.yaml
