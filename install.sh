@@ -80,9 +80,6 @@ setup_nvim() {
 
   echo "Updating vim plugins"
   nvim +"lua require('lazy').sync({wait=true})" +qa
-
-  echo "Updating language tools"
-  nvim --headless "+MasonUpdate" +qa
 }
 
 install_apps() {

@@ -33,7 +33,6 @@ return {
       opts = dapui_opts,
       dependencies = {"nvim-neotest/nvim-nio"},
       config = function(_, opts)
-        require("dap.ext.vscode").load_launchjs()
 
         local dap = require("dap")
         local dapui = require("dapui")
