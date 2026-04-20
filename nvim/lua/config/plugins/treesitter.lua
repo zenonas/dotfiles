@@ -1,122 +1,102 @@
-local treesitter_opts = {
-  auto_install = true,
-  ensure_installed = {
-    "bash",
-    "comment",
-    "css",
-    "dockerfile",
-    "elm",
-    "gitignore",
-    "go",
-    "gomod",
-    "html",
-    "javascript",
-    "json",
-    "lua",
-    "make",
-    "markdown",
-    "markdown_inline",
-    "proto",
-    "php",
-    "python",
-    "regex",
-    "ruby",
-    "scss",
-    "sql",
-    "terraform",
-    "toml",
-    "tsx",
-    "typescript",
-    "vim",
-    "yaml",
-  },
-  sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
-  ignore_install = { }, -- List of parsers to ignore installing
-  autopairs = { enable = true },
-  highlight = {
-    enable = true,
-    disable = {}, -- list of languages that will be disabled
-    additional_vim_regex_highlighting = {}, -- list of languages to use vim regex highlights with
-  },
-  indent = { enable = true, disable = { "yaml" } },
-  context_commentstring = {
-    enable = true,
-    enable_autocmd = false,
-  },
-  playground = {
-    enable = true,
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ['aa'] = '@parameter.outer',
-        ['ia'] = '@parameter.inner',
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
-      },
-    },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        [']f'] = '@function.outer',
-        [']{'] = '@class.outer',
-      },
-      goto_next_end = {
-        [']F'] = '@function.outer',
-        [']}'] = '@class.outer',
-      },
-      goto_previous_start = {
-        ['[f'] = '@function.outer',
-        ['[{'] = '@class.outer',
-      },
-      goto_previous_end = {
-        ['[F'] = '@function.outer',
-        ['[{'] = '@class.outer',
-      },
-    },
-  },
-  endwise = {
-    enable = true,
-  },
-}
-
 return {
-  -- Treesitter
-  -- Syntax parsing and highlighting
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    lazy = false,
-    branch = "master",
-    opts = treesitter_opts,
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
+  "nvim-treesitter",
+  beforeAll = function()
+    _G.Paq.add({
+      {
+        "nvim-treesitter/nvim-treesitter",
+        branch = "main",
+        build = ":TSUpdate",
+      },
+      {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        branch = "main",
+      },
+    })
+  end,
+  load = function(name)
+    vim.cmd.packadd(name)
+    vim.cmd.packadd("nvim-treesitter-textobjects")
+  end,
+  after = function()
+    -- Note that some queries have dependencies, but if a dependency is
+    -- deleted, it won't automatically be reinstalled
+    require("nvim-treesitter").install({
+      "bash",
+      "comment",
+      "css",
+      "dockerfile",
+      "elm",
+      "gitignore",
+      "go",
+      "gomod",
+      "html",
+      "javascript",
+      "json",
+      "lua",
+      "make",
+      "markdown",
+      "markdown_inline",
+      "proto",
+      "php",
+      "python",
+      "regex",
+      "ruby",
+      "scss",
+      "sql",
+      "terraform",
+      "toml",
+      "tsx",
+      "typescript",
+      "vim",
+      "yaml",
+    })
+
+    require("nvim-treesitter-textobjects").setup({
+      select = {
+        lookahead = true,
+      },
+    })
+
+    local function map(lhs, obj)
+      vim.keymap.set({ "x", "o" }, lhs, function()
+        require("nvim-treesitter-textobjects.select").select_textobject(
+          obj,
+          "textobjects"
+        )
+      end)
+    end
+
+    map("aa", "@parameter.outer")
+    map("ia", "@parameter.inner")
+    map("af", "@function.outer")
+    map("if", "@function.inner")
+    map("ac", "@class.outer")
+    map("ic", "@class.inner")
+
+    -- Register the todotxt parser to be used for text filetypes
+    vim.treesitter.language.register("todotxt", "text")
+
+    vim.api.nvim_create_autocmd("FileType", {
+      callback = function(ev)
+        if pcall(vim.treesitter.start) then
+          -- Set indentexpr for queries that have an indents.scm, check in
+          -- ~/.local/share/nvim/site/queries/QUERY/
+          -- Hopefully this will happen automatically in the future
+          if
+            ({
+              c = true,
+              lua = true,
+              markdown = true,
+              python = true,
+              query = true,
+              xml = true,
+            })[ev.match]
+            then
+              vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+            end
+          end
+        end,
+      })
     end,
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
-    }
-  },
-
-  {
-    'nvim-treesitter/nvim-treesitter-context',
-    opts = {
-      max_lines = 5,
-      min_window_height = 32,
-    }
-  },
-
-  -- Show details of treesitter and highlighting
-  {
-    "nvim-treesitter/playground",
-    lazy = true,
-    cmd = "TSPlaygroundToggle",
-  },
-
   "andymass/vim-matchup",                       -- Extend % for more languages
 }
