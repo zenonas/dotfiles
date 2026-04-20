@@ -54,12 +54,6 @@ return {
     }
   },
 
-  -- Visualise the undo tree and make it easy to navigate
-  {
-    'mbbill/undotree',
-    event = "VeryLazy",
-  },
-
   -- Bindings to speed up choosing ours/theres when resolving diffs
   {
     "akinsho/git-conflict.nvim",
@@ -76,45 +70,10 @@ return {
     }
   },
 
-  {
-    'sindrets/diffview.nvim'
-  },
-
   -- Better Quickfix formatting
   {
     "kevinhwang91/nvim-bqf",
     ft = "qf",
-  },
-
-  -- Show indentation markers
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    main = "ibl",
-    event = "VeryLazy",
-    opts = {
-      indent = {
-        char = "▏",
-        tab_char = " ",
-      },
-      scope = {
-        enabled = true,
-        exclude = {
-          node_type = { ruby = { "module", "class" } },
-        }
-      },
-      exclude = {
-        filetypes = {
-          "help",
-          "alpha",
-          "Trouble",
-          "trouble",
-          "lazy",
-          "mason",
-          "notify",
-          "toggleterm",
-        },
-      },
-    },
   },
 
   {
