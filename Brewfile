@@ -17,6 +17,10 @@ brew 'yt-dlp'
 brew 'uv'
 brew 'starship'
 
+brew 'bash-language-server'
+brew 'lua-language-server'
+brew 'yaml-language-server'
+
 # Better terminal tools
 brew 'bat'
 brew 'btop'

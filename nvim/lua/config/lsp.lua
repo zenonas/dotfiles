@@ -4,7 +4,7 @@ vim.lsp.config('*', {
 })
 
 vim.lsp.config('solargraph', {
-  cmd = { 'asdf', 'exec', 'solargraph', 'stdio' },
+  cmd = { 'bundle', 'exec', 'solargraph', 'stdio' },
   settings = {
     solargraph = {
       diagnostics = true,

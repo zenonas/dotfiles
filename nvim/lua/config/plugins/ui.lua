@@ -2,9 +2,15 @@ return {
   {
     "AdamWhittingham/vim-adcode-theme",
     lazy = false,
+    priority = 1000
+  },
+
+  { 
+    "catppuccin/nvim", 
+    name = "catppuccin", 
     priority = 1000,
     config = function()
-      vim.cmd("colorscheme adCode")
+      vim.cmd("colorscheme catppuccin-mocha")
       vim.api.nvim_set_option_value("background", "dark", {})
       vim.cmd([[hi Normal guibg=NONE ctermbg=NONE]]) -- transparent background
     end
