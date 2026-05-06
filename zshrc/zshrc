@@ -57,9 +57,6 @@ setopt INTERACTIVECOMMENTS  # Ignore everything in a command from a hash to a ne
 # Setup command highlighting
 source "$PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
-# Setup Github Copilot
-source "$PLUGINS/zsh-github-copilot/zsh-github-copilot.plugin.zsh"
-
 # Setup History
 export HISTFILE=~/.dotfiles/zshrc/tmp/zsh_history
 export HISTSIZE=5000
@@ -197,7 +194,3 @@ compdef g='git'
 
 bindkey "b" backward-word
 bindkey "f" forward-word
-
-bindkey '^[E' zsh_gh_copilot_explain  # bind Ctrl+\ to explain
-bindkey '^[S' zsh_gh_copilot_suggest  # bind Alt+\ to suggest
-

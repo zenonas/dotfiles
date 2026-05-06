@@ -13,7 +13,6 @@ run() {
   install_apps
   link_dotfiles
   setup_nvim
-  [[ "$DEBIAN_FRONTEND" -ne "noninteractive" ]] && setup_copilot
   [[ "$DEBIAN_FRONTEND" -ne "noninteractive" ]] && configure_stuff
 }
 
@@ -86,12 +85,6 @@ install_apps() {
   gum spin --title "Installing base apps" -- brew bundle -v
 
   [[ "$(uname)" == "Darwin" ]] &&  gum spin --title "Installing MacOS apps" -- brew bundle --file=Brewfile.macos
-}
-
-setup_copilot() {
-  gum confirm "Do you want to setup Github Copilot?" &&
-    gh auth login --web -h github.com &&
-    gh extension install github/gh-copilot --force
 }
 
 configure_stuff() {
