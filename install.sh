@@ -27,6 +27,7 @@ backup_old_dotfiles() {
   [[ -d ~/.vim ]] && mv ~/.vim $BACKUP_DOTFILES_DIR/
   [[ -f ~/.tmux.conf ]] && mv ~/.tmux.conf $BACKUP_DOTFILES_DIR/
   [[ -f ~/.bashrc ]] && mv ~/.bashrc $BACKUP_DOTFILES_DIR/
+  [[ -f ~/.tool-versions ]] && mv ~/.tool-versions $BACKUP_DOTFILES_DIR/
   [[ -d $XDG_CONFIG_HOME/nvim ]] && mv $XDG_CONFIG_HOME/nvim ~/ $BACKUP_DOTFILES_DIR/
 }
 
@@ -42,6 +43,7 @@ clean_up() {
   [[ -L ~/.vim ]] && rm ~/.vim
   [[ -L ~/.vimrc ]] && rm ~/.vimrc
   [[ -L ~/.tmux.conf ]] && rm ~/.tmux.conf
+  [[ -L ~/.tool-versions ]] && rm ~/.tool-versions
   [[ -L $XDG_CONFIG_HOME/nvim ]] && rm $XDG_CONFIG_HOME/nvim
 }
 

@@ -13,13 +13,13 @@ ZSHDIR="$DOTFILES/zshrc"
 FUNCTIONS="$ZSHDIR/functions"
 PLUGINS="$ZSHDIR/plugins"
 
-source_if_present "$DOTFILES/zshrc/env"
-source_if_present "$DOTFILES/zshrc/aliases"
-
 #ensure XDG_CONFIG_HOME is setup
 [[ ! -d $XDG_CONFIG_HOME ]] && mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
 export XDG_CONFIG_HOME=$HOME/.config
 eval "$(starship init zsh)"
+
+source_if_present "$DOTFILES/zshrc/env"
+source_if_present "$DOTFILES/zshrc/aliases"
 
 # Load direnv if it is available
 if type direnv > /dev/null; then eval "$(direnv hook zsh)"; fi
@@ -194,3 +194,8 @@ compdef g='git'
 
 bindkey "b" backward-word
 bindkey "f" forward-word
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/zen/.lmstudio/bin"
+# End of LM Studio CLI section
+

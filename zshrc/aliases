@@ -108,3 +108,6 @@ fi
 if ( type prettyping &>/dev/null ) ; then
   alias ping='prettyping'
 fi
+
+alias mia='eval "$(mise activate zsh)"'
+alias mid='mise deactivate'

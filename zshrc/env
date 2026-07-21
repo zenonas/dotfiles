@@ -26,13 +26,6 @@ export PATH=~/.dotfiles/scripts:$PATH
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
  fi
 
-# Source Rbenv
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-if which nodenv > /dev/null; then eval "$(nodenv init -)"; fi
-if which jenv > /dev/null; then eval "$(jenv init -)"; fi
-
 # GO Lang
 export GOPATH="$HOME/.go"
 export PATH=$PATH:$GOPATH/bin
@@ -46,4 +39,3 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 export LIMA_TEMPLATES_PATH="$HOME/.config/lima/templates:/opt/homebrew/share/lima/templates"
 [ -f ~/.env.local ] && source ~/.env.local
-

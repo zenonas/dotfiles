@@ -1,3 +1,4 @@
+config-version = 2
 after-startup-command = ['exec-and-forget sketchybar']
 
 # Notify Sketchybar about workspace change
@@ -52,6 +53,10 @@ if.app-name-regex-substring = 'whatsapp'
 run = 'layout floating'
 
 [[on-window-detected]]
+if.app-name-regex-substring = 'wifiman'
+run = 'layout floating'
+
+[[on-window-detected]]
 if.app-name-regex-substring = 'finder'
 run = 'layout floating'
 
@@ -68,10 +73,6 @@ if.app-name-regex-substring = '1password'
 run = 'layout floating'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'dicord'
-run = 'layout floating'
-
-[[on-window-detected]]
 if.app-name-regex-substring = 'mimestream'
 run = 'layout floating'
 
@@ -80,7 +81,7 @@ if.app-name-regex-substring = 'quicktime'
 run = 'layout floating'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'discord'
+if.app-name-regex-substring = 'screen'
 run = 'layout floating'
 
 # Possible values: (qwerty|dvorak)
