@@ -39,10 +39,9 @@ brew 'prettyping'
 brew 'ripgrep'
 brew 'rpl'
 brew 'tig'
-brew 'tldr'
+brew 'tlrc'
 brew 'tree'
 brew 'vale'
-brew 'watch'
 brew 'fastfetch'
 
 # Libs

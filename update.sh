@@ -9,7 +9,7 @@
 # changes. If `git pull --ff-only` fails for any other reason (for example
 # the local branch has diverged from upstream), the current checkout is
 # applied as-is; everything else still runs.
-#
+
 # Must stay compatible with macOS's /bin/bash 3.2.
 set -euo pipefail
 

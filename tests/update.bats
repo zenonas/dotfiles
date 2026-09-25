@@ -50,6 +50,7 @@ push_new_commit() {
   [ "$status" -eq 0 ]
   [[ "$output" == *"Usage: ./update.sh"* ]]
   [[ "$output" != *"install ran"* ]]
+  [[ "$output" != *"bash 3.2"* ]]
   after="$(git -C "$CLONE" rev-parse HEAD)"
   [ "$after" = "$before" ]
   [ ! -f "$CLONE/NEWFILE" ]

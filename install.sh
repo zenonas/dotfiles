@@ -10,7 +10,7 @@
 #   DOTFILES_BREW_UPDATE=1  run `brew update` before installing packages
 #
 # Anything replaced is moved to ~/.dotfiles_backup/<timestamp>/.
-#
+
 # Must stay compatible with macOS's /bin/bash 3.2.
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
@@ -137,36 +137,59 @@ as_root() {
 }
 
 # Linuxbrew prerequisites plus the libraries mise needs to build Ruby.
+# Only touches the package manager when something is actually missing, so a
+# second run doesn't re-trigger an update/install on every invocation.
 install_linux_prereqs() {
   case "$1" in
     debian)
-      log "Installing apt prerequisites"
-      as_root apt-get update -qq
-      as_root env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
-        build-essential procps curl file git zsh \
-        libssl-dev libyaml-dev zlib1g-dev libffi-dev libreadline-dev libgmp-dev
+      local pkgs=(build-essential procps curl file git zsh \
+        libssl-dev libyaml-dev zlib1g-dev libffi-dev libreadline-dev libgmp-dev)
+      local missing=() pkg
+      for pkg in "${pkgs[@]}"; do
+        if ! dpkg-query -W -f='${Status}' "$pkg" 2>/dev/null | grep -q '^install ok installed$'; then
+          missing+=("$pkg")
+        fi
+      done
+      if [[ "${#missing[@]}" -gt 0 ]]; then
+        log "Installing apt prerequisites"
+        as_root apt-get update -qq
+        as_root env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq "${missing[@]}"
+      fi
       ;;
     arch)
-      log "Installing pacman prerequisites"
-      as_root pacman -Syu --needed --noconfirm \
-        base-devel procps-ng curl file git zsh openssl libyaml zlib libffi readline gmp
+      local pkgs=(base-devel procps-ng curl file git zsh openssl libyaml zlib libffi readline gmp)
+      if [[ -n "$(pacman -T "${pkgs[@]}" 2>/dev/null || true)" ]]; then
+        log "Installing pacman prerequisites"
+        as_root pacman -Syu --needed --noconfirm "${pkgs[@]}"
+      fi
       ;;
   esac
 }
 
 brew_shellenv() {
-  local brew
-  for brew in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linuxbrew/bin/brew; do
+  local brew candidates
+  if [[ -n "${DOTFILES_BREW_PATHS:-}" ]]; then
+    # shellcheck disable=SC2206
+    candidates=($DOTFILES_BREW_PATHS)
+  else
+    candidates=(/opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linuxbrew/bin/brew)
+  fi
+  for brew in "${candidates[@]}"; do
     if [[ -x "$brew" ]]; then
-      eval "$("$brew" shellenv)"
-      return 0
+      eval "$("$brew" shellenv bash)"
+      command -v brew >/dev/null 2>&1 && return 0
     fi
   done
   return 1
 }
 
 ensure_brew() {
+  local os="$1"
   if ! brew_shellenv; then
+    if [[ "$os" == macos ]] && $INTERACTIVE; then
+      log "Priming sudo (Homebrew's installer may need it)"
+      sudo -v
+    fi
     log "Installing Homebrew"
     NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     brew_shellenv || die "Homebrew installed but brew was not found"
@@ -183,21 +206,34 @@ install_packages() {
   brew bundle --file="$DOTFILES_DIR/Brewfile"
   if [[ "$1" == macos ]]; then
     log "Installing macOS apps"
-    brew bundle --file="$DOTFILES_DIR/Brewfile.macos"
+    # Best-effort: a cask conflicting with an app installed outside brew, or
+    # one that needs interactive sudo, must not abort the whole install.
+    brew bundle --file="$DOTFILES_DIR/Brewfile.macos" ||
+      log "warning: some macOS apps failed to install; continuing"
   fi
 }
 
 install_runtimes() {
   if command -v mise >/dev/null 2>&1; then
     log "Installing mise runtimes"
-    MISE_YES=1 mise install
+    # Run from $HOME so a mise.toml in the caller's cwd isn't auto-trusted.
+    (cd "$HOME" && MISE_YES=1 mise install)
   fi
 }
 
 sync_nvim() {
   if command -v nvim >/dev/null 2>&1; then
-    log "Syncing neovim plugins"
-    nvim --headless "+Lazy! sync" +qa
+    log "Restoring neovim plugins"
+    # "restore" installs exactly what lazy-lock.json pins; "sync" would
+    # also upgrade plugins and rewrite that tracked lockfile.
+    nvim --headless "+Lazy! restore" +qa </dev/null
+  fi
+}
+
+# Homebrew refuses to run as root, on every platform.
+refuse_root() {
+  if [[ "$(id -u)" -eq 0 ]]; then
+    die "run as a regular user with sudo access; Homebrew refuses to run as root"
   fi
 }
 
@@ -231,12 +267,10 @@ main() {
   local os
   os="$(detect_os)"
   [[ "$os" != unsupported ]] || die "unsupported OS (expected macOS, Debian/Ubuntu or Arch)"
-  if [[ "$os" != macos && "$(id -u)" -eq 0 ]]; then
-    die "run as a regular user with sudo access; Homebrew refuses to run as root on Linux"
-  fi
+  refuse_root
 
   if [[ "$os" != macos ]]; then install_linux_prereqs "$os"; fi
-  ensure_brew
+  ensure_brew "$os"
   install_packages "$os"
   mkdir -p "$CONFIG_DIR" "$DOTFILES_DIR/zshrc/tmp"
   link_home
