@@ -3,11 +3,12 @@
 
 setup() {
   REPO_ROOT="$(cd "$BATS_TEST_DIRNAME/.." && pwd -P)"
-  # shellcheck source=../install.sh
-  source "$REPO_ROOT/install.sh"
 
   export HOME="$BATS_TEST_TMPDIR/home"
   mkdir -p "$HOME"
+
+  # shellcheck source=../install.sh
+  source "$REPO_ROOT/install.sh"
 
   # A fake checkout so tests never touch the real repo.
   FAKE_DOTFILES="$BATS_TEST_TMPDIR/dotfiles"
@@ -135,4 +136,57 @@ os_release() {
   INTERACTIVE=false
   setup_git_identity < /dev/null
   [ ! -e "$HOME/.gitconfig" ]
+}
+
+@test "backup: refuses to move a directory that contains the checkout" {
+  mkdir -p "$HOME/.dotfiles/dotfiles"
+  DOTFILES_DIR="$(cd "$HOME/.dotfiles/dotfiles" && pwd -P)"
+  run backup "$HOME/.dotfiles"
+  [ "$status" -ne 0 ]
+  [[ "$output" == *"refusing to move"* ]]
+  [ -d "$HOME/.dotfiles/dotfiles" ]
+}
+
+@test "link_home: refuses to move ~/.dotfiles when the checkout lives inside it" {
+  mkdir -p "$HOME/.dotfiles/dotfiles"
+  DOTFILES_DIR="$(cd "$HOME/.dotfiles/dotfiles" && pwd -P)"
+  run link_home
+  [ "$status" -ne 0 ]
+  [[ "$output" == *"refusing to move"* ]]
+  [ -d "$HOME/.dotfiles/dotfiles" ]
+}
+
+@test "prepare_stow_targets: skips entirely when the checkout is ~/.config" {
+  mkdir -p "$CONFIG_DIR/nvim"
+  echo mine > "$CONFIG_DIR/nvim/init.lua"
+  DOTFILES_DIR="$(cd "$CONFIG_DIR" && pwd -P)"
+  run prepare_stow_targets
+  [ "$status" -eq 0 ]
+  [ -z "$BACKUP_DIR" ]
+  [ "$(cat "$CONFIG_DIR/nvim/init.lua")" = "mine" ]
+}
+
+@test "backup: refuses to overwrite an existing backup with the same basename" {
+  mkdir -p "$HOME/a/dupe" "$HOME/b/dupe"
+  backup "$HOME/a/dupe"
+  run backup "$HOME/b/dupe"
+  [ "$status" -ne 0 ]
+  [[ "$output" == *"refusing to overwrite"* ]]
+}
+
+@test "backup: two runs in the same second get different backup dirs" {
+  mkdir -p "$HOME/one"
+  backup "$HOME/one"
+  first="$BACKUP_DIR"
+  BACKUP_DIR=""
+  mkdir -p "$HOME/two"
+  backup "$HOME/two"
+  [ "$first" != "$BACKUP_DIR" ]
+}
+
+@test "backup: logs the symlink target when moving a link" {
+  ln -s /somewhere/else "$HOME/dangling-link"
+  run backup "$HOME/dangling-link"
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"(-> /somewhere/else)"* ]]
 }

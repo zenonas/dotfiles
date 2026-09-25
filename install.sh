@@ -45,12 +45,26 @@ detect_os() {
 
 # Move a path into this run's backup directory.
 backup() {
-  local path="$1"
-  if [[ -z "$BACKUP_DIR" ]]; then
-    BACKUP_DIR="$BACKUP_ROOT/$(date +%Y%m%d-%H%M%S)"
-    mkdir -p "$BACKUP_DIR"
+  local path="$1" phys dest
+  if [[ ! -L "$path" ]]; then
+    phys="$(cd "$path" 2>/dev/null && pwd -P)" || phys=""
+    if [[ -n "$phys" ]] && { [[ "$DOTFILES_DIR" == "$phys" ]] || [[ "$DOTFILES_DIR" == "$phys"/* ]]; }; then
+      die "refusing to move $path: it contains this checkout"
+    fi
   fi
-  log "Moving $path to $BACKUP_DIR/"
+  if [[ -z "$BACKUP_DIR" ]]; then
+    mkdir -p "$BACKUP_ROOT"
+    BACKUP_DIR="$(mktemp -d "$BACKUP_ROOT/$(date +%Y%m%d-%H%M%S).XXXXXX")"
+  fi
+  dest="$BACKUP_DIR/$(basename "$path")"
+  if [[ -e "$dest" || -L "$dest" ]]; then
+    die "refusing to overwrite existing backup at $dest"
+  fi
+  if [[ -L "$path" ]]; then
+    log "Moving $path (-> $(readlink "$path")) to $BACKUP_DIR/"
+  else
+    log "Moving $path to $BACKUP_DIR/"
+  fi
   mv "$path" "$BACKUP_DIR/"
 }
 
@@ -86,6 +100,8 @@ stow_packages() {
 # Move aside anything in ~/.config that stow would conflict with, unless it
 # already links into this checkout.
 prepare_stow_targets() {
+  # The checkout is cloned as ~/.config itself; there is nothing to stow.
+  if [[ "$CONFIG_DIR" -ef "$DOTFILES_DIR" ]]; then return 0; fi
   local name target
   while read -r name; do
     target="$CONFIG_DIR/$name"
