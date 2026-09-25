@@ -4,9 +4,13 @@
 --ignore=DS_Store
 --ignore=Brewfile
 --ignore=Brewfile.macos
---ignore=LICENCE
+--ignore=LICENSE
 --ignore=Makefile
 --ignore=README.md
 --ignore=rgignore
---ignore=install.sh
---ignore=scripts
+--ignore=^install\.sh
+--ignore=^update\.sh
+--ignore=^scripts
+--ignore=^tests
+--ignore=^\.claude
+--ignore=^\.tool-versions
