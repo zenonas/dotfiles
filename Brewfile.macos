@@ -2,7 +2,6 @@
 cask 'cyberduck'
 cask 'postman'
 cask 'tableplus'
-cask 'claude-code'
 cask 'visual-studio-code'
 cask 'wezterm'
 cask 'ghostty'
@@ -18,6 +17,7 @@ cask 'ngrok'
 cask 'zoom'
 
 # General
+brew 'duti'
 cask 'discord'
 cask 'mimestream'
 cask 'vlc'

@@ -132,8 +132,124 @@ setup_git_identity() {
   if [[ -n "$email" ]]; then git config --file "$file" user.email "$email"; fi
 }
 
+as_root() {
+  if [[ "$(id -u)" -eq 0 ]]; then "$@"; else sudo "$@"; fi
+}
+
+# Linuxbrew prerequisites plus the libraries mise needs to build Ruby.
+install_linux_prereqs() {
+  case "$1" in
+    debian)
+      log "Installing apt prerequisites"
+      as_root apt-get update -qq
+      as_root env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
+        build-essential procps curl file git zsh \
+        libssl-dev libyaml-dev zlib1g-dev libffi-dev libreadline-dev libgmp-dev
+      ;;
+    arch)
+      log "Installing pacman prerequisites"
+      as_root pacman -Syu --needed --noconfirm \
+        base-devel procps-ng curl file git zsh openssl libyaml zlib libffi readline gmp
+      ;;
+  esac
+}
+
+brew_shellenv() {
+  local brew
+  for brew in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linuxbrew/bin/brew; do
+    if [[ -x "$brew" ]]; then
+      eval "$("$brew" shellenv)"
+      return 0
+    fi
+  done
+  return 1
+}
+
+ensure_brew() {
+  if ! brew_shellenv; then
+    log "Installing Homebrew"
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    brew_shellenv || die "Homebrew installed but brew was not found"
+  fi
+  export HOMEBREW_NO_AUTO_UPDATE=1
+  if [[ "${DOTFILES_BREW_UPDATE:-}" == 1 ]]; then
+    log "Updating Homebrew"
+    brew update
+  fi
+}
+
+install_packages() {
+  log "Installing Brewfile packages"
+  brew bundle --file="$DOTFILES_DIR/Brewfile"
+  if [[ "$1" == macos ]]; then
+    log "Installing macOS apps"
+    brew bundle --file="$DOTFILES_DIR/Brewfile.macos"
+  fi
+}
+
+install_runtimes() {
+  if command -v mise >/dev/null 2>&1; then
+    log "Installing mise runtimes"
+    MISE_YES=1 mise install
+  fi
+}
+
+sync_nvim() {
+  if command -v nvim >/dev/null 2>&1; then
+    log "Syncing neovim plugins"
+    nvim --headless "+Lazy! sync" +qa
+  fi
+}
+
+# Print this script's header comment (lines 2.. up to the first non-comment
+# line), stripped of the leading '#'. Used for --help.
+print_usage() {
+  local line rest
+  {
+    read -r line
+    while IFS= read -r line; do
+      case "$line" in
+        '#'*) : ;;
+        *) break ;;
+      esac
+      rest="${line#\#}"
+      printf '%s\n' "${rest# }"
+    done
+  } < "${BASH_SOURCE[0]}"
+}
+
 main() {
-  :
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --yes|-y) INTERACTIVE=false; shift ;;
+      -h|--help) print_usage; exit 0 ;;
+      *) die "unknown argument: $1" ;;
+    esac
+  done
+  if [[ ! -t 0 ]]; then INTERACTIVE=false; fi
+
+  local os
+  os="$(detect_os)"
+  [[ "$os" != unsupported ]] || die "unsupported OS (expected macOS, Debian/Ubuntu or Arch)"
+  if [[ "$os" != macos && "$(id -u)" -eq 0 ]]; then
+    die "run as a regular user with sudo access; Homebrew refuses to run as root on Linux"
+  fi
+
+  if [[ "$os" != macos ]]; then install_linux_prereqs "$os"; fi
+  ensure_brew
+  install_packages "$os"
+  mkdir -p "$CONFIG_DIR" "$DOTFILES_DIR/zshrc/tmp"
+  link_home
+  prepare_stow_targets
+  # The checkout may be ~/.config itself; prepare_stow_targets already
+  # skips, and there is nothing for stow to link in that case either.
+  if [[ ! "$CONFIG_DIR" -ef "$DOTFILES_DIR" ]]; then
+    stow_dotfiles
+  fi
+  install_runtimes
+  sync_nvim
+  setup_git_identity
+  log "Dotfiles installed"
 }
 
 if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
