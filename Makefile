@@ -1,10 +1,11 @@
-.PHONY: install
+.PHONY: install update test
+
 install:
 	./install.sh
 
-.PHONY: git-update
-git-update:
-	git pull
+update:
+	./update.sh
 
-.PHONY: update
-update: git-update install
+test:
+	bats tests
+	shellcheck install.sh update.sh
