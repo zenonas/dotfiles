@@ -120,3 +120,19 @@ os_release() {
   [ ! -e "$CONFIG_DIR/nvim" ]
   [ -L "$BACKUP_DIR/nvim" ]
 }
+
+@test "setup_git_identity: writes GIT_NAME/GIT_EMAIL to ~/.gitconfig only" {
+  mkdir -p "$CONFIG_DIR/git"
+  : > "$CONFIG_DIR/git/config"
+  GIT_NAME="Ada Lovelace" GIT_EMAIL="ada@example.com" setup_git_identity
+  [ "$(git config --file "$HOME/.gitconfig" user.name)" = "Ada Lovelace" ]
+  [ "$(git config --file "$HOME/.gitconfig" user.email)" = "ada@example.com" ]
+  [ ! -s "$CONFIG_DIR/git/config" ]
+}
+
+@test "setup_git_identity: non-interactive without env writes nothing" {
+  unset GIT_NAME GIT_EMAIL
+  INTERACTIVE=false
+  setup_git_identity < /dev/null
+  [ ! -e "$HOME/.gitconfig" ]
+}

@@ -102,6 +102,20 @@ stow_dotfiles() {
   (cd "$DOTFILES_DIR" && stow --restow .)
 }
 
+# ~/.config/git/config is stowed from this repo, so identity goes in
+# ~/.gitconfig (git reads both) to keep it out of version control.
+setup_git_identity() {
+  local file="$HOME/.gitconfig" name="${GIT_NAME:-}" email="${GIT_EMAIL:-}"
+  if [[ -z "$name" ]] && ! git config --file "$file" user.name >/dev/null 2>&1 && $INTERACTIVE; then
+    read -r -p "Git full name (blank to skip): " name
+  fi
+  if [[ -z "$email" ]] && ! git config --file "$file" user.email >/dev/null 2>&1 && $INTERACTIVE; then
+    read -r -p "Git email (blank to skip): " email
+  fi
+  if [[ -n "$name" ]]; then git config --file "$file" user.name "$name"; fi
+  if [[ -n "$email" ]]; then git config --file "$file" user.email "$email"; fi
+}
+
 main() {
   :
 }
