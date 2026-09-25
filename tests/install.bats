@@ -221,6 +221,66 @@ STUBEOF
   grep -q "^brew 'tlrc'\$" "$REPO_ROOT/Brewfile"
 }
 
+@test "Brewfile.macos: colima restarts only on install/upgrade, not on every run" {
+  grep -q "^brew 'colima', restart_service: true\$" "$REPO_ROOT/Brewfile.macos"
+  [ "$(grep -c 'restart_service: :always' "$REPO_ROOT/Brewfile.macos")" -eq 0 ]
+}
+
+@test "Brewfile.macos: aerospace cask is fully qualified and trusted (third-party tap)" {
+  # trusted: true only takes effect for a fully-qualified cask name
+  # ("<tap>/<name>"); Homebrew::Trust checks Utils.full_name?, which requires
+  # exactly two slashes, so an unqualified `cask "aerospace"` would silently
+  # not be trusted.
+  grep -q '^cask "nikitabobko/tap/aerospace", trusted: true$' "$REPO_ROOT/Brewfile.macos"
+}
+
+@test "install_packages: replaces the disabled tldr formula with tlrc when tldr is installed" {
+  write_stub brew '
+    printf "brew %s\n" "$*" >> "$CALLS_LOG"
+    case "$*" in
+      "list --formula tldr") exit 0 ;;
+      "uninstall --formula tldr") exit 0 ;;
+      *) exit 0 ;;
+    esac
+  '
+  export CALLS_LOG="$BATS_TEST_TMPDIR/calls.log"
+  : > "$CALLS_LOG"
+  run bash -c "
+    set -euo pipefail
+    source '$REPO_ROOT/install.sh'
+    DOTFILES_DIR='$FAKE_DOTFILES'
+    CALLS_LOG='$CALLS_LOG'
+    PATH='$STUB_BIN:'\"\$PATH\"
+    install_packages macos
+  "
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"Replacing the disabled tldr formula with tlrc"* ]]
+  grep -q "uninstall --formula tldr" "$CALLS_LOG"
+}
+
+@test "install_packages: does not touch tldr when it is not installed" {
+  write_stub brew '
+    printf "brew %s\n" "$*" >> "$CALLS_LOG"
+    case "$*" in
+      "list --formula tldr") exit 1 ;;
+      *) exit 0 ;;
+    esac
+  '
+  export CALLS_LOG="$BATS_TEST_TMPDIR/calls.log"
+  : > "$CALLS_LOG"
+  run bash -c "
+    set -euo pipefail
+    source '$REPO_ROOT/install.sh'
+    DOTFILES_DIR='$FAKE_DOTFILES'
+    CALLS_LOG='$CALLS_LOG'
+    PATH='$STUB_BIN:'\"\$PATH\"
+    install_packages macos
+  "
+  [ "$status" -eq 0 ]
+  [[ "$output" != *"Replacing the disabled tldr formula with tlrc"* ]]
+  ! grep -q "uninstall --formula tldr" "$CALLS_LOG"
+}
+
 @test "install_packages: a Brewfile.macos bundle failure is a warning, not fatal" {
   write_stub brew 'case "$*" in *Brewfile.macos*) exit 1 ;; esac; exit 0'
   run bash -c "

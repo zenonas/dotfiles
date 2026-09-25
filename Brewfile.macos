@@ -5,7 +5,7 @@ cask 'tableplus'
 cask 'visual-studio-code'
 cask 'wezterm'
 cask 'ghostty'
-brew 'colima', restart_service: :always
+brew 'colima', restart_service: true
 
 # Tools for Work
 cask 'google-chrome'
@@ -25,7 +25,10 @@ cask 'obsidian'
 cask 'cloudflare-warp'
 
 tap "nikitabobko/tap"
-cask "aerospace"
+# Homebrew 7 refuses untrusted third-party taps; trusted: true only takes
+# effect for a fully-qualified cask name (Utils.full_name? requires the
+# "<tap>/<name>" form), so the token can't be left short here.
+cask "nikitabobko/tap/aerospace", trusted: true
 
 # Fonts
 cask 'font-hasklig'

@@ -202,6 +202,12 @@ ensure_brew() {
 }
 
 install_packages() {
+  # Homebrew has disabled the 'tldr' formula, and 'tlrc' (its replacement,
+  # now in the Brewfile) conflicts with an installed 'tldr'. Clear it first.
+  if brew list --formula tldr >/dev/null 2>&1; then
+    log "Replacing the disabled tldr formula with tlrc"
+    brew uninstall --formula tldr
+  fi
   log "Installing Brewfile packages"
   brew bundle --file="$DOTFILES_DIR/Brewfile"
   if [[ "$1" == macos ]]; then
