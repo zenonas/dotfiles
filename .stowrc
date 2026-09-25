@@ -9,4 +9,7 @@
 --ignore=README.md
 --ignore=rgignore
 --ignore=install.sh
+--ignore=update.sh
 --ignore=scripts
+--ignore=tests
+--ignore=\.claude

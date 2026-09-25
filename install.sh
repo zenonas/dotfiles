@@ -73,6 +73,35 @@ link_home() {
   done < <(home_links)
 }
 
+# Top-level directories that stow links into ~/.config (see .stowrc).
+stow_packages() {
+  local dir name
+  for dir in "$DOTFILES_DIR"/*/; do
+    name="$(basename "$dir")"
+    case "$name" in scripts|tests|tmp) continue ;; esac
+    printf '%s\n' "$name"
+  done
+}
+
+# Move aside anything in ~/.config that stow would conflict with, unless it
+# already links into this checkout.
+prepare_stow_targets() {
+  local name target
+  while read -r name; do
+    target="$CONFIG_DIR/$name"
+    if [[ ! -e "$target" && ! -L "$target" ]]; then continue; fi
+    if [[ -L "$target" && "$(cd "$target" 2>/dev/null && pwd -P)" == "$DOTFILES_DIR/$name" ]]; then
+      continue
+    fi
+    backup "$target"
+  done < <(stow_packages)
+}
+
+stow_dotfiles() {
+  log "Linking config into $CONFIG_DIR"
+  (cd "$DOTFILES_DIR" && stow --restow .)
+}
+
 main() {
   :
 }

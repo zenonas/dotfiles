@@ -88,3 +88,35 @@ os_release() {
   [ -d "$HOME/.dotfiles" ] && [ ! -L "$HOME/.dotfiles" ]
   [ -f "$HOME/.dotfiles/zshrc/zshrc" ]
 }
+
+@test "stow_packages: lists config dirs but not scripts or tests" {
+  run stow_packages
+  [[ "$output" == *"nvim"* ]]
+  [[ "$output" == *"zshrc"* ]]
+  [[ "$output" != *"scripts"* ]]
+  [[ "$output" != *"tests"* ]]
+}
+
+@test "prepare_stow_targets: backs up a real ~/.config dir" {
+  mkdir -p "$CONFIG_DIR/nvim"
+  echo "mine" > "$CONFIG_DIR/nvim/init.lua"
+  prepare_stow_targets
+  [ ! -e "$CONFIG_DIR/nvim" ]
+  [ "$(cat "$BACKUP_DIR/nvim/init.lua")" = "mine" ]
+}
+
+@test "prepare_stow_targets: keeps links into this checkout" {
+  mkdir -p "$CONFIG_DIR"
+  ln -s "$FAKE_DOTFILES/nvim" "$CONFIG_DIR/nvim"
+  prepare_stow_targets
+  [ -L "$CONFIG_DIR/nvim" ]
+  [ -z "$BACKUP_DIR" ]
+}
+
+@test "prepare_stow_targets: moves links into another checkout" {
+  mkdir -p "$CONFIG_DIR" "$BATS_TEST_TMPDIR/other/nvim"
+  ln -s "$BATS_TEST_TMPDIR/other/nvim" "$CONFIG_DIR/nvim"
+  prepare_stow_targets
+  [ ! -e "$CONFIG_DIR/nvim" ]
+  [ -L "$BACKUP_DIR/nvim" ]
+}
