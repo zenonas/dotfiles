@@ -51,3 +51,40 @@ os_release() {
   DOTFILES_UNAME=Linux DOTFILES_OS_RELEASE="$(os_release 'ID=fedora')" run detect_os
   [ "$output" = "unsupported" ]
 }
+
+@test "link_home: creates ~/.dotfiles, ~/.zshrc and ~/.tool-versions" {
+  link_home
+  [ "$(readlink "$HOME/.dotfiles")" = "$FAKE_DOTFILES" ]
+  [ "$(readlink "$HOME/.zshrc")" = "$HOME/.config/zshrc/zshrc" ]
+  [ "$(readlink "$HOME/.tool-versions")" = "$HOME/.dotfiles/.tool-versions" ]
+  [ ! -e "$BACKUP_ROOT" ]
+}
+
+@test "link_home: second run changes nothing" {
+  link_home
+  BACKUP_DIR=""
+  link_home
+  [ ! -e "$BACKUP_ROOT" ]
+}
+
+@test "link_home: moves an existing real ~/.zshrc to the backup" {
+  echo "old zshrc" > "$HOME/.zshrc"
+  link_home
+  [ -L "$HOME/.zshrc" ]
+  [ "$(cat "$BACKUP_DIR/.zshrc")" = "old zshrc" ]
+}
+
+@test "link_home: replaces a link that points at another checkout" {
+  ln -s /somewhere/else "$HOME/.dotfiles"
+  link_home
+  [ "$(readlink "$HOME/.dotfiles")" = "$FAKE_DOTFILES" ]
+  [ "$(readlink "$BACKUP_DIR/.dotfiles")" = "/somewhere/else" ]
+}
+
+@test "link_home: leaves a checkout that lives at ~/.dotfiles alone" {
+  mv "$FAKE_DOTFILES" "$HOME/.dotfiles"
+  DOTFILES_DIR="$(cd "$HOME/.dotfiles" && pwd -P)"
+  link_home
+  [ -d "$HOME/.dotfiles" ] && [ ! -L "$HOME/.dotfiles" ]
+  [ -f "$HOME/.dotfiles/zshrc/zshrc" ]
+}

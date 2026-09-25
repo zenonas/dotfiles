@@ -43,6 +43,36 @@ detect_os() {
   esac
 }
 
+# Move a path into this run's backup directory.
+backup() {
+  local path="$1"
+  if [[ -z "$BACKUP_DIR" ]]; then
+    BACKUP_DIR="$BACKUP_ROOT/$(date +%Y%m%d-%H%M%S)"
+    mkdir -p "$BACKUP_DIR"
+  fi
+  log "Moving $path to $BACKUP_DIR/"
+  mv "$path" "$BACKUP_DIR/"
+}
+
+# Links outside ~/.config, one "<link>|<target>" per line.
+home_links() {
+  printf '%s\n' \
+    "$HOME/.dotfiles|$DOTFILES_DIR" \
+    "$HOME/.zshrc|$CONFIG_DIR/zshrc/zshrc" \
+    "$HOME/.tool-versions|$HOME/.dotfiles/.tool-versions"
+}
+
+link_home() {
+  local link target
+  while IFS='|' read -r link target; do
+    if [[ -L "$link" && "$(readlink "$link")" == "$target" ]]; then continue; fi
+    # The checkout itself may live at ~/.dotfiles.
+    if [[ ! -L "$link" && "$link" -ef "$target" ]]; then continue; fi
+    if [[ -e "$link" || -L "$link" ]]; then backup "$link"; fi
+    ln -s "$target" "$link"
+  done < <(home_links)
+}
+
 main() {
   :
 }
