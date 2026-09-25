@@ -1,106 +1,53 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Install or re-apply these dotfiles. Safe to re-run.
+#
+# Usage: ./install.sh [--yes]
+#
+#   --yes   never prompt (also implied when stdin is not a terminal)
+#
+# Environment:
+#   GIT_NAME, GIT_EMAIL     git identity, written to ~/.gitconfig
+#   DOTFILES_BREW_UPDATE=1  run `brew update` before installing packages
+#
+# Anything replaced is moved to ~/.dotfiles_backup/<timestamp>/.
+#
+# Must stay compatible with macOS's /bin/bash 3.2.
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-BACKUP_DOTFILES_DIR=~/.dotfiles_backup
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+CONFIG_DIR="$HOME/.config"
+BACKUP_ROOT="$HOME/.dotfiles_backup"
+BACKUP_DIR=""
+INTERACTIVE=true
 
-run() {
-  if [[ ! -d $BACKUP_DOTFILES_DIR ]]; then
-    backup_old_dotfiles
+log() { printf '==> %s\n' "$*"; }
+die() { printf 'dotfiles: %s\n' "$*" >&2; exit 1; }
+
+detect_os() {
+  local kernel="${DOTFILES_UNAME:-$(uname -s)}"
+  local release="${DOTFILES_OS_RELEASE:-/etc/os-release}"
+  local id="" like=""
+  if [[ "$kernel" == "Darwin" ]]; then
+    echo macos
+    return 0
   fi
-  install_deps
-  mkdir -p $DIR/tmp
-  clean_up
-  install_apps
-  link_dotfiles
-  setup_nvim
-  [[ "$DEBIAN_FRONTEND" -ne "noninteractive" ]] && configure_stuff
-}
-
-backup_old_dotfiles() {
-  mkdir -p $BACKUP_DOTFILES_DIR
-  echo "Backing up your old dotfiles in $BACKUP_DOTFILES_DIR"
-  [[ -f ~/.profile ]] && mv ~/.profile $BACKUP_DOTFILES_DIR/
-  [[ -f ~/.zshrc ]] && mv ~/.zshrc $BACKUP_DOTFILES_DIR/
-  [[ -f ~/.gitconfig ]] && mv ~/.gitconfig $BACKUP_DOTFILES_DIR/
-  [[ -f ~/.vimrc ]] && mv ~/.vimrc $BACKUP_DOTFILES_DIR/
-  [[ -f ~/.ideavimrc ]] && mv ~/.ideavimrc $BACKUP_DOTFILES_DIR/
-  [[ -d ~/.vim ]] && mv ~/.vim $BACKUP_DOTFILES_DIR/
-  [[ -f ~/.tmux.conf ]] && mv ~/.tmux.conf $BACKUP_DOTFILES_DIR/
-  [[ -f ~/.bashrc ]] && mv ~/.bashrc $BACKUP_DOTFILES_DIR/
-  [[ -f ~/.tool-versions ]] && mv ~/.tool-versions $BACKUP_DOTFILES_DIR/
-  [[ -d $XDG_CONFIG_HOME/nvim ]] && mv $XDG_CONFIG_HOME/nvim ~/ $BACKUP_DOTFILES_DIR/
-}
-
-clean_up() {
-  echo "Cleaning up old symlinks"
-  [[ -L ~/.bash_profile ]] && rm ~/.bash_profile
-  [[ -L ~/.bashrc ]] && rm ~/.bashrc
-  [[ -L ~/.dotfiles ]] && rm ~/.dotfiles
-  [[ -L ~/.zshrc ]] && rm ~/.zshrc
-  [[ -L ~/.gitconfig ]] && rm ~/.gitconfig
-  [[ -L ~/.gitignore ]] && rm ~/.gitignore
-  [[ -L ~/.ideavimrc ]] && rm ~/.ideavimrc
-  [[ -L ~/.vim ]] && rm ~/.vim
-  [[ -L ~/.vimrc ]] && rm ~/.vimrc
-  [[ -L ~/.tmux.conf ]] && rm ~/.tmux.conf
-  [[ -L ~/.tool-versions ]] && rm ~/.tool-versions
-  [[ -L $XDG_CONFIG_HOME/nvim ]] && rm $XDG_CONFIG_HOME/nvim
-}
-
-link_dotfiles() {
-  export XDG_CONFIG_HOME=~/.config
-  mkdir -p $XDG_CONFIG_HOME
-  echo "Symlinking dotfiles"
-  ln -s $XDG_CONFIG_HOME/zshrc/zshrc ~/.zshrc
-  stow -v .
-}
-
-install_deps() {
-  if ! which brew  > /dev/null; then /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; fi
-  export PATH=/opt/homebrew/opt/libpq/bin:/opt/homebrew/bin:/usr/local/opt/grep/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/snap/bin:$PATH
-
-  if [[ "$(uname)" != "Darwin" ]]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  if [[ -r "$release" ]]; then
+    # shellcheck disable=SC1090
+    id="$(. "$release" && echo "${ID:-}")"
+    # shellcheck disable=SC1090
+    like="$(. "$release" && echo "${ID_LIKE:-}")"
   fi
-
-  if ! which gum >/dev/null; then
-    echo "Gum not found, installing"
-    brew install gum &>/dev/null
-  fi
-
-  if ! which stow >/dev/null; then
-    echo "Stow not found, installing"
-    brew install stow &>/dev/null
-  fi
-  export HOMEBREW_NO_AUTO_UPDATE=1
+  case " $id $like " in
+    *" debian "*|*" ubuntu "*) echo debian ;;
+    *" arch "*) echo arch ;;
+    *) echo unsupported ;;
+  esac
 }
 
-setup_nvim() {
-  echo "Updating git hook"
-  ./nvim/install-plugin-update-hook.sh
-
-  echo "Updating vim plugins"
-  nvim +"lua require('lazy').sync({wait=true})" +qa
+main() {
+  :
 }
 
-install_apps() {
-  gum spin --title "Installing base apps" -- brew bundle -v
-
-  [[ "$(uname)" == "Darwin" ]] &&  gum spin --title "Installing MacOS apps" -- brew bundle --file=Brewfile.macos
-}
-
-configure_stuff() {
-  gum confirm "Configure your name and email in gitconfig?" && setup_git
-}
-
-setup_git() {
-  gum log "Setting up gitconfig"
-
-  fullname=$(gum input --placeholder="Enter your fullname")
-  email=$(gum input --placeholder="Enter your email address")
-
-  git config --global user.name "$fullname"
-  git config --global user.email "$email"
-}
-
-run
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+  set -euo pipefail
+  main "$@"
+fi
